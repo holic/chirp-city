@@ -4,6 +4,7 @@
 import {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -19,22 +20,28 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface TweeterInterface extends utils.Interface {
   functions: {
     "tweet(string)": FunctionFragment;
+    "tweets(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(functionFragment: "tweet", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "tweets",
+    values: [BigNumberish]
+  ): string;
 
   decodeFunctionResult(functionFragment: "tweet", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tweets", data: BytesLike): Result;
 
   events: {
-    "Tweet(string,address)": EventFragment;
+    "Tweet(address,uint256,uint256,string)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Tweet"): EventFragment;
 }
 
 export type TweetEvent = TypedEvent<
-  [string, string],
-  { message: string; from: string }
+  [string, BigNumber, BigNumber, string],
+  { from: string; id: BigNumber; timestamp: BigNumber; message: string }
 >;
 
 export type TweetEventFilter = TypedEventFilter<TweetEvent>;
@@ -70,6 +77,8 @@ export interface Tweeter extends BaseContract {
       message: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    tweets(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
   };
 
   tweet(
@@ -77,16 +86,27 @@ export interface Tweeter extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  tweets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
   callStatic: {
     tweet(message: string, overrides?: CallOverrides): Promise<void>;
+
+    tweets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    "Tweet(string,address)"(
-      message?: string | null,
-      from?: string | null
+    "Tweet(address,uint256,uint256,string)"(
+      from?: string | null,
+      id?: null,
+      timestamp?: null,
+      message?: null
     ): TweetEventFilter;
-    Tweet(message?: string | null, from?: string | null): TweetEventFilter;
+    Tweet(
+      from?: string | null,
+      id?: null,
+      timestamp?: null,
+      message?: null
+    ): TweetEventFilter;
   };
 
   estimateGas: {
@@ -94,12 +114,19 @@ export interface Tweeter extends BaseContract {
       message: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    tweets(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     tweet(
       message: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    tweets(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

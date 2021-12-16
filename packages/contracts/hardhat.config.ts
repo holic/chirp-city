@@ -1,5 +1,6 @@
 import "@typechain/hardhat";
 import "@nomiclabs/hardhat-ethers";
+import "@nomiclabs/hardhat-etherscan";
 import "hardhat-gas-reporter";
 
 import dotenv from "dotenv";
@@ -23,5 +24,8 @@ export default {
       url: process.env.POLYGON_MUMBAI_URL,
       accounts: [process.env.POLYGON_MUMBAI_DEPLOYER_PRIVATE_KEY],
     },
+  },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY,
   },
 };

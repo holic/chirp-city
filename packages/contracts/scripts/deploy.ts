@@ -1,6 +1,6 @@
 import { ContractFactory } from "ethers";
 import fs from "fs/promises";
-import { ethers, network } from "hardhat";
+import hre, { ethers, network } from "hardhat";
 
 import { Tweeter__factory } from "../typechain-types";
 
@@ -44,6 +44,15 @@ const deployContract = async (factory: ContractFactory) => {
       2
     )
   );
+
+  console.log("Waiting for more confirmations before verify…");
+  await contract.deployTransaction.wait(10);
+
+  console.log("Verifying contract…");
+  await hre.run("verify:verify", {
+    address: contract.address,
+    constructorArguments: [],
+  });
 };
 
 async function start() {

@@ -3,6 +3,8 @@ import { useCallback, useEffect, useMemo } from "react";
 
 export const useWallet = () => {
   const wallet = useWalletHook();
+
+  // https://github.com/gimmixorg/use-wallet/pull/1
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const connectWallet = useMemo(() => wallet.connect, []);
 

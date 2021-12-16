@@ -1,8 +1,5 @@
 {
-  "localhost": {
-    "Tweeter": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
-  },
   "mumbai": {
-    "Tweeter": "0x6b2Fa39b39073E9AfBf4477d6C016dD3811E36c4"
+    "Tweeter": "0xb3e41B6a6a7484eEB16AF881BcF60d2957b98a71"
   }
 }

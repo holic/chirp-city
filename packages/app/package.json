@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gimmixorg/use-wallet": "^0.0.30",
     "@tweets-on-chain/contracts": "workspace:*",
     "next": "12.0.7",
     "react": "17.0.2",

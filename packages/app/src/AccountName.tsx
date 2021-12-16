@@ -13,15 +13,14 @@ export const AccountName = ({ address }: Props) => {
   const [name, setName] = useState(
     address.replace(/^((?:0x)?\w{3})\w+(\w{4})$/, "$1…$2")
   );
-  // const { provider } = useWallet();
-  // useEffect(() => {
-  //   if (!provider) return;
-  //   (async () => {
-  //     const ensName = await provider.lookupAddress(address);
-  //     if (ensName) {
-  //       setName(ensName);
-  //     }
-  //   })();
-  // }, [provider, address]);
+  const { ethereumProvider } = useWallet();
+  useEffect(() => {
+    (async () => {
+      const ensName = await ethereumProvider.lookupAddress(address);
+      if (ensName) {
+        setName(ensName);
+      }
+    })();
+  }, [ethereumProvider, address]);
   return <>{name}</>;
 };

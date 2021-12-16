@@ -28,6 +28,7 @@ importers:
       autoprefixer: ^10.4.0
       eslint: 8.4.1
       eslint-config-next: 12.0.7
+      ethers: ^5.5.2
       luxon: ^2.2.0
       next: 12.0.7
       postcss: ^8.4.5
@@ -39,6 +40,7 @@ importers:
     dependencies:
       '@gimmixorg/use-wallet': 0.0.30_react@17.0.2
       '@tweets-on-chain/contracts': link:../contracts
+      ethers: 5.5.2
       luxon: 2.2.0
       next: 12.0.7_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
@@ -393,7 +395,6 @@ packages:
       '@ethersproject/logger': 5.5.0
       '@ethersproject/properties': 5.5.0
       '@ethersproject/strings': 5.5.0
-    dev: true
 
   /@ethersproject/abstract-provider/5.5.1:
     resolution: {integrity: sha512-m+MA/ful6eKbxpr99xUYeRvLkfnlqzrF8SZ46d/xFB1A7ZVknYc/sXJG0RcufF52Qn2jeFj1hhcoQ7IXjNKUqg==}
@@ -465,7 +466,6 @@ packages:
       '@ethersproject/logger': 5.5.0
       '@ethersproject/properties': 5.5.0
       '@ethersproject/transactions': 5.5.0
-    dev: true
 
   /@ethersproject/hash/5.5.0:
     resolution: {integrity: sha512-dnGVpK1WtBjmnp3mUT0PlU2MpapnwWI0PibldQEq1408tQBAbZpPidkWoVVuNMOl/lISO3+4hXZWCL3YV7qzfg==}
@@ -494,7 +494,6 @@ packages:
       '@ethersproject/strings': 5.5.0
       '@ethersproject/transactions': 5.5.0
       '@ethersproject/wordlists': 5.5.0
-    dev: true
 
   /@ethersproject/json-wallets/5.5.0:
     resolution: {integrity: sha512-9lA21XQnCdcS72xlBn1jfQdj2A1VUxZzOzi9UkNdnokNKke/9Ya2xA9aIK1SC3PQyBDLt4C+dfps7ULpkvKikQ==}
@@ -512,7 +511,6 @@ packages:
       '@ethersproject/transactions': 5.5.0
       aes-js: 3.0.0
       scrypt-js: 3.0.1
-    dev: true
 
   /@ethersproject/keccak256/5.5.0:
     resolution: {integrity: sha512-5VoFCTjo2rYbBe1l2f4mccaRFN/4VQEYFwwn04aJV2h7qf4ZvI2wFxUE1XOX+snbwCLRzIeikOqtAoPwMza9kg==}
@@ -533,7 +531,6 @@ packages:
     dependencies:
       '@ethersproject/bytes': 5.5.0
       '@ethersproject/sha2': 5.5.0
-    dev: true
 
   /@ethersproject/properties/5.5.0:
     resolution: {integrity: sha512-l3zRQg3JkD8EL3CPjNK5g7kMx4qSwiR60/uk5IVjd3oq1MZR5qUg40CNOoEJoX5wc3DyY5bt9EbMk86C7x0DNA==}
@@ -604,7 +601,6 @@ packages:
       '@ethersproject/logger': 5.5.0
       '@ethersproject/sha2': 5.5.0
       '@ethersproject/strings': 5.5.0
-    dev: true
 
   /@ethersproject/strings/5.5.0:
     resolution: {integrity: sha512-9fy3TtF5LrX/wTrBaT8FGE6TDJyVjOvXynXJz5MT5azq+E6D92zuKNx7i29sWW2FjVOaWjAsiZ1ZWznuduTIIQ==}
@@ -632,7 +628,6 @@ packages:
       '@ethersproject/bignumber': 5.5.0
       '@ethersproject/constants': 5.5.0
       '@ethersproject/logger': 5.5.0
-    dev: true
 
   /@ethersproject/wallet/5.5.0:
     resolution: {integrity: sha512-Mlu13hIctSYaZmUOo7r2PhNSd8eaMPVXe1wxrz4w4FCE4tDYBywDH+bAR1Xz2ADyXGwqYMwstzTrtUVIsKDO0Q==}
@@ -652,7 +647,6 @@ packages:
       '@ethersproject/signing-key': 5.5.0
       '@ethersproject/transactions': 5.5.0
       '@ethersproject/wordlists': 5.5.0
-    dev: true
 
   /@ethersproject/web/5.5.1:
     resolution: {integrity: sha512-olvLvc1CB12sREc1ROPSHTdFCdvMh0J5GSJYiQg2D0hdD4QmJDy8QYDb1CvoqD/bF1c++aeKv2sR5uduuG9dQg==}
@@ -671,7 +665,6 @@ packages:
       '@ethersproject/logger': 5.5.0
       '@ethersproject/properties': 5.5.0
       '@ethersproject/strings': 5.5.0
-    dev: true
 
   /@gimmixorg/use-wallet/0.0.30_react@17.0.2:
     resolution: {integrity: sha512-0Zhyn4FUBMf1cRRBgkSm1nSGjXAOo9lv/UohuPnnp/Cv9PJcQplR8s5izAVcg/7ymwkafSAtPHnjtlqSv2dHkQ==}
@@ -1393,7 +1386,6 @@ packages:
 
   /aes-js/3.0.0:
     resolution: {integrity: sha1-4h3xCtbCBTKVvLuNq0Cwnb6ofk0=}
-    dev: true
 
   /agent-base/6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
@@ -3010,7 +3002,6 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    dev: true
 
   /ethjs-util/0.1.6:
     resolution: {integrity: sha512-CUnVOQq7gSpDHZVVrQW8ExxUETWrnrvXYvYz55wOU8Uj4VCgw56XC2B/fVqQN+f7gmrnRHSLVnFAwsCuNwji8w==}
@@ -5261,7 +5252,6 @@ packages:
 
   /scrypt-js/3.0.1:
     resolution: {integrity: sha512-cdwTTnqPu0Hyvf5in5asVdZocVDTNRmR7XEcJuIzMjJeSHybHl7vpB66AzwTaIg6CLSbtjcxc8fqcySfnTkccA==}
-    dev: true
 
   /secp256k1/3.8.0:
     resolution: {integrity: sha512-k5ke5avRZbtl9Tqx/SA7CbY3NF6Ro+Sj9cZxezFzuBlLDmyqPiL8hJJ+EmzD8Ig4LUDByHJ3/iPOVoRixs/hmw==}

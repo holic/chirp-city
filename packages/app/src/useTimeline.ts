@@ -55,7 +55,8 @@ export const useTimeline = () => {
       addresses.mumbai.Tweeter,
       provider
     );
-    const tweetFilter = contract.filters.Tweet(account);
+    // TODO: filter by following
+    const tweetFilter = contract.filters.Tweet();
     const tweetListener: TypedListener<TweetEvent> = (
       from,
       id,

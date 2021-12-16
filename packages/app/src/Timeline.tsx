@@ -4,6 +4,7 @@ import { DateTime } from "luxon";
 import { useState } from "react";
 
 import { AccountName } from "./AccountName";
+import { Avatar } from "./Avatar";
 import { useTimeline } from "./useTimeline";
 import { useWallet } from "./useWallet";
 
@@ -47,7 +48,7 @@ export const Timeline = () => {
         }}
       >
         <div className="p-4 flex gap-4">
-          <div className="flex-shrink-0 w-16 h-16 rounded-full bg-black bg-opacity-10"></div>
+          <Avatar address={account} />
           <div className="flex flex-col flex-wrap w-full">
             <div className="flex text-xl py-2">
               <textarea

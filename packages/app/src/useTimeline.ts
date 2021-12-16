@@ -5,6 +5,7 @@ import { TypedListener } from "@tweets-on-chain/contracts/typechain-types/common
 import { TweetEvent } from "@tweets-on-chain/contracts/typechain-types/Tweeter";
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
+import createStore from "zustand";
 
 type Tweet = {
   id: string;
@@ -13,24 +14,41 @@ type Tweet = {
   message: string;
 };
 
+type State = {
+  tweets: Record<Tweet["id"], Tweet>;
+  addTweet: (tweet: Tweet) => void;
+};
+
+const useStore = createStore<State>((set) => ({
+  tweets: {},
+  addTweet: (tweet) =>
+    set((state) => ({
+      tweets: {
+        ...state.tweets,
+        [tweet.id]: tweet,
+      },
+    })),
+}));
+
 export const useTimeline = () => {
   const { provider, account } = useWallet();
-  const [tweets, setTweets] = useState<Record<string, Tweet>>({});
+  const tweets = useStore((state) => state.tweets);
+  const addTweet = useStore((state) => state.addTweet);
+
+  const timeline = Object.values(tweets).sort(
+    (a, b) => b.date.toSeconds() - a.date.toSeconds()
+  );
 
   useEffect(() => {
     if (!provider || !account) return;
 
-    const addTweet = (event: TweetEvent) => {
-      const id = event.args.id.toString();
-      setTweets((tweets) => ({
-        ...tweets,
-        [id]: {
-          id,
-          date: DateTime.fromSeconds(event.args.timestamp.toNumber()),
-          from: event.args.from,
-          message: event.args.message,
-        },
-      }));
+    const addTweetEvent = (event: TweetEvent) => {
+      addTweet({
+        id: event.args.id.toString(),
+        date: DateTime.fromSeconds(event.args.timestamp.toNumber()),
+        from: event.args.from,
+        message: event.args.message,
+      });
     };
 
     const contract = Tweeter__factory.connect(
@@ -46,29 +64,39 @@ export const useTimeline = () => {
       event
     ) => {
       console.log("got tweet from", from, ":", message, event);
-      addTweet(event);
+      addTweetEvent(event);
     };
     contract.on(tweetFilter, tweetListener);
 
-    // TODO: paginate from newest to oldest
-    (async () => {
-      const fromBlock = 22727314;
-      const currentBlock = await provider.getBlockNumber();
+    // TODO: record this as part of the deploy or fetch from deploy tx
+    const firstBlock = 22727314;
+
+    // TODO: cache which blocks we've fetched from in zustand/localStorage
+    const fetchEvents = async (fromBlock: number, numBlocks: number) => {
+      // TODO: stop fetching on unmount
+      if (fromBlock < firstBlock) return;
+
       const events = await contract.queryFilter(
         tweetFilter,
-        fromBlock,
-        Math.min(fromBlock + 500, currentBlock)
+        fromBlock - numBlocks,
+        fromBlock
       );
+
       console.log("got events", events);
-      events.map(addTweet);
+      events.map(addTweetEvent);
+
+      await fetchEvents(fromBlock - numBlocks, numBlocks);
+    };
+
+    (async () => {
+      const currentBlock = await provider.getBlockNumber();
+      fetchEvents(currentBlock - 1, 1000);
     })();
 
     return () => {
       contract.off(tweetFilter, tweetListener);
     };
-  }, [provider, account]);
+  }, [provider, account, addTweet]);
 
-  return Object.values(tweets).sort(
-    (a, b) => b.date.toSeconds() - a.date.toSeconds()
-  );
+  return timeline;
 };

@@ -12,7 +12,7 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex flex-col flex-wrap items-center">
-        <div className="flex-shrink-0 w-1/2">
+        <div className="flex-shrink-0 w-full md:w-2/3 lg:w-1/2">
           <Timeline />
         </div>
       </div>

@@ -1,6 +1,6 @@
 {
-  "private": true,
   "name": "tweets-on-chain",
+  "private": true,
   "scripts": {},
   "devDependencies": {
     "eslint": "^8.4.1",

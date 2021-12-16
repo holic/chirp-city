@@ -1,5 +1,6 @@
 {
   "name": "@tweets-on-chain/contracts",
+  "private": true,
   "scripts": {
     "start": "hardhat node",
     "test": "hardhat test",

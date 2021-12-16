@@ -6,7 +6,8 @@
     "test": "hardhat test",
     "build": "hardhat compile",
     "clean": "hardhat clean",
-    "deploy:local": "hardhat clean && hardhat run scripts/deploy.ts --network localhost"
+    "deploy:local": "hardhat clean && hardhat run scripts/deploy.ts --network localhost",
+    "deploy:testnet": "hardhat clean && hardhat run scripts/deploy.ts --network mumbai"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.0",

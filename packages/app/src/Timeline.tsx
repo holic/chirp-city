@@ -1,5 +1,6 @@
 import addresses from "@tweets-on-chain/contracts/addresses.json";
 import { Tweeter__factory } from "@tweets-on-chain/contracts/typechain-types";
+import { DateTime } from "luxon";
 import { useState } from "react";
 
 import { AccountName } from "./AccountName";
@@ -81,7 +82,9 @@ export const Timeline = () => {
                 <AccountName address={tweet.from} />
               </div>
               <div>·</div>
-              <div>{tweet.date.toLocaleTimeString()}</div>
+              <div title={tweet.date.toLocaleString(DateTime.DATETIME_FULL)}>
+                {tweet.date.toRelative()}
+              </div>
             </div>
             <div>{tweet.message}</div>
           </div>

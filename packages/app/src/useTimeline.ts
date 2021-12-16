@@ -3,11 +3,12 @@ import addresses from "@tweets-on-chain/contracts/addresses.json";
 import { Tweeter__factory } from "@tweets-on-chain/contracts/typechain-types";
 import { TypedListener } from "@tweets-on-chain/contracts/typechain-types/common";
 import { TweetEvent } from "@tweets-on-chain/contracts/typechain-types/Tweeter";
+import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 
 type Tweet = {
   id: string;
-  date: Date;
+  date: DateTime;
   from: string;
   message: string;
 };
@@ -25,7 +26,7 @@ export const useTimeline = () => {
         ...tweets,
         [id]: {
           id,
-          date: new Date(event.args.timestamp.toNumber() * 1000),
+          date: DateTime.fromSeconds(event.args.timestamp.toNumber()),
           from: event.args.from,
           message: event.args.message,
         },
@@ -68,6 +69,6 @@ export const useTimeline = () => {
   }, [provider, account]);
 
   return Object.values(tweets).sort(
-    (a, b) => b.date.getTime() - a.date.getTime()
+    (a, b) => b.date.toSeconds() - a.date.toSeconds()
   );
 };

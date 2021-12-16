@@ -2,7 +2,9 @@ import "@typechain/hardhat";
 import "@nomiclabs/hardhat-ethers";
 import "hardhat-gas-reporter";
 
-require("dotenv").config();
+import dotenv from "dotenv";
+
+dotenv.config();
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -19,9 +21,7 @@ export default {
     },
     mumbai: {
       url: process.env.POLYGON_MUMBAI_URL,
-      accounts: [
-        process.env.POLYGON_MUMBAI_DEPLOYER_PRIVATE_KEY,
-      ],
+      accounts: [process.env.POLYGON_MUMBAI_DEPLOYER_PRIVATE_KEY],
     },
   },
 };

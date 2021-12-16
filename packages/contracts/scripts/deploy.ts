@@ -1,7 +1,8 @@
-import fs from "fs/promises";
 import { ContractFactory } from "ethers";
-import { Tweeter__factory } from "../typechain-types";
+import fs from "fs/promises";
 import { ethers, network } from "hardhat";
+
+import { Tweeter__factory } from "../typechain-types";
 
 const exists = (path: string) =>
   fs

@@ -33,18 +33,18 @@ export interface TweeterInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "tweets", data: BytesLike): Result;
 
   events: {
-    "Tweet(address,uint256,uint256,string)": EventFragment;
+    "Tweeted(address,uint256,uint256,string)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Tweet"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Tweeted"): EventFragment;
 }
 
-export type TweetEvent = TypedEvent<
+export type TweetedEvent = TypedEvent<
   [string, BigNumber, BigNumber, string],
   { from: string; id: BigNumber; timestamp: BigNumber; message: string }
 >;
 
-export type TweetEventFilter = TypedEventFilter<TweetEvent>;
+export type TweetedEventFilter = TypedEventFilter<TweetedEvent>;
 
 export interface Tweeter extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -78,7 +78,16 @@ export interface Tweeter extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    tweets(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    tweets(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [string, BigNumber, string] & {
+        from: string;
+        timestamp: BigNumber;
+        message: string;
+      }
+    >;
   };
 
   tweet(
@@ -86,27 +95,45 @@ export interface Tweeter extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  tweets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tweets(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [string, BigNumber, string] & {
+      from: string;
+      timestamp: BigNumber;
+      message: string;
+    }
+  >;
 
   callStatic: {
     tweet(message: string, overrides?: CallOverrides): Promise<void>;
 
-    tweets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    tweets(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [string, BigNumber, string] & {
+        from: string;
+        timestamp: BigNumber;
+        message: string;
+      }
+    >;
   };
 
   filters: {
-    "Tweet(address,uint256,uint256,string)"(
+    "Tweeted(address,uint256,uint256,string)"(
       from?: string | null,
       id?: null,
       timestamp?: null,
       message?: null
-    ): TweetEventFilter;
-    Tweet(
+    ): TweetedEventFilter;
+    Tweeted(
       from?: string | null,
       id?: null,
       timestamp?: null,
       message?: null
-    ): TweetEventFilter;
+    ): TweetedEventFilter;
   };
 
   estimateGas: {

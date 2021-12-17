@@ -2,7 +2,7 @@ import { useWallet } from "@gimmixorg/use-wallet";
 import addresses from "@tweets-on-chain/contracts/addresses.json";
 import { Tweeter__factory } from "@tweets-on-chain/contracts/typechain-types";
 import { TypedListener } from "@tweets-on-chain/contracts/typechain-types/common";
-import { TweetEvent } from "@tweets-on-chain/contracts/typechain-types/Tweeter";
+import { TweetedEvent } from "@tweets-on-chain/contracts/typechain-types/Tweeter";
 import { DateTime } from "luxon";
 import { useEffect } from "react";
 import createStore from "zustand";
@@ -42,7 +42,7 @@ export const useTimeline = () => {
   useEffect(() => {
     if (!provider || !account) return;
 
-    const addTweetEvent = (event: TweetEvent) => {
+    const addTweetEvent = (event: TweetedEvent) => {
       addTweet({
         id: event.args.id.toString(),
         date: DateTime.fromSeconds(event.args.timestamp.toNumber()),
@@ -56,8 +56,8 @@ export const useTimeline = () => {
       provider
     );
     // TODO: filter by following
-    const tweetFilter = contract.filters.Tweet();
-    const tweetListener: TypedListener<TweetEvent> = (
+    const tweetFilter = contract.filters.Tweeted();
+    const tweetListener: TypedListener<TweetedEvent> = (
       from,
       id,
       timestamp,

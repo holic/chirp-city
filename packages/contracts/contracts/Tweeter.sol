@@ -7,14 +7,20 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 contract Tweeter {
     using Counters for Counters.Counter;
 
-    Counters.Counter private id;
-    mapping(uint256 => string) public tweets;
+    struct Tweet {
+        address from;
+        uint256 timestamp;
+        string message;
+    }
 
-    event Tweet(address indexed from, uint256 id, uint256 timestamp, string message);
+    Counters.Counter private id;
+    mapping(uint256 => Tweet) public tweets;
+
+    event Tweeted(address indexed from, uint256 id, uint256 timestamp, string message);
 
     function tweet(string calldata message) external {
         id.increment();
-        tweets[id.current()] = message;
-        emit Tweet(msg.sender, id.current(), block.timestamp, message);
+        tweets[id.current()] = Tweet(msg.sender, block.timestamp, message);
+        emit Tweeted(msg.sender, id.current(), block.timestamp, message);
     }
 }

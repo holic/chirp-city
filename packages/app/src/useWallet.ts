@@ -1,4 +1,5 @@
 import { useWallet as useWalletHook } from "@gimmixorg/use-wallet";
+import { ethers } from "ethers";
 import { useCallback, useEffect, useMemo } from "react";
 
 export const useWallet = () => {
@@ -11,6 +12,7 @@ export const useWallet = () => {
   const connect = useCallback(() => {
     connectWallet({
       cacheProvider: true,
+      network: "mumbai",
     });
   }, [connectWallet]);
 
@@ -21,5 +23,9 @@ export const useWallet = () => {
     }
   }, [connect, wallet.web3Modal?.cachedProvider, wallet.account]);
 
-  return { ...wallet, connect };
+  return {
+    ...wallet,
+    connect,
+    account: wallet.account && ethers.utils.getAddress(wallet.account),
+  };
 };

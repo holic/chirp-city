@@ -1,5 +1,3 @@
-import { useENS } from "./useENS";
-
 type Props = {
   src?: string;
   alt?: string;

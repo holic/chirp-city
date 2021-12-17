@@ -1,5 +1,4 @@
 import { useWallet as useWalletHook } from "@gimmixorg/use-wallet";
-import { ethers } from "ethers";
 import { useCallback, useEffect, useMemo } from "react";
 
 export const useWallet = () => {
@@ -22,9 +21,5 @@ export const useWallet = () => {
     }
   }, [connect, wallet.web3Modal?.cachedProvider, wallet.account]);
 
-  const ethereumProvider = new ethers.providers.JsonRpcProvider(
-    process.env.NEXT_PUBLIC_ETHEREUM_RPC_ENDPOINT
-  );
-
-  return { ...wallet, connect, ethereumProvider };
+  return { ...wallet, connect };
 };

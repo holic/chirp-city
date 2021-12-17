@@ -1,10 +1,10 @@
 import addresses from "@tweets-on-chain/contracts/addresses.json";
 import { Tweeter__factory } from "@tweets-on-chain/contracts/typechain-types";
-import { DateTime } from "luxon";
 import { useState } from "react";
 
 import { AccountName } from "./AccountName";
 import { Avatar } from "./Avatar";
+import { RelativeTime } from "./RelativeTime";
 import { useTimeline } from "./useTimeline";
 import { useWallet } from "./useWallet";
 
@@ -76,16 +76,14 @@ export const Timeline = () => {
           key={tweet.id}
           className="p-4 flex gap-4 hover:cursor-pointer hover:bg-gray-100"
         >
-          <div className="flex-shrink-0 w-16 h-16 rounded-full bg-black bg-opacity-10"></div>
+          <Avatar address={tweet.from} />
           <div className="flex flex-col flex-wrap">
             <div className="flex flex-wrap gap-2 text-gray-500">
               <div className="font-bold">
                 <AccountName address={tweet.from} />
               </div>
               <div>·</div>
-              <div title={tweet.date.toLocaleString(DateTime.DATETIME_FULL)}>
-                {tweet.date.toRelative()}
-              </div>
+              <RelativeTime date={tweet.date} />
             </div>
             <div>{tweet.message}</div>
           </div>

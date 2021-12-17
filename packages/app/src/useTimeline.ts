@@ -4,7 +4,7 @@ import { Tweeter__factory } from "@tweets-on-chain/contracts/typechain-types";
 import { TypedListener } from "@tweets-on-chain/contracts/typechain-types/common";
 import { TweetEvent } from "@tweets-on-chain/contracts/typechain-types/Tweeter";
 import { DateTime } from "luxon";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import createStore from "zustand";
 
 type Tweet = {

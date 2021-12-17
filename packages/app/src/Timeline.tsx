@@ -19,7 +19,7 @@ export const Timeline = () => {
       <div className="flex items-center justify-center p-4">
         <button
           type="button"
-          className="self-end rounded-full bg-blue-500 px-4 py-2 font-bold text-white"
+          className="self-end rounded-full bg-blue-500 px-4 py-2 font-bold text-white transition disabled:opacity-60 disabled:hover:bg-blue-500 hover:bg-blue-600 active:bg-blue-700"
           onClick={() => connect()}
         >
           Log in with wallet

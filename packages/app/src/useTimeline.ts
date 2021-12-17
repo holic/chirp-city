@@ -7,6 +7,8 @@ import { DateTime } from "luxon";
 import { useEffect } from "react";
 import createStore from "zustand";
 
+import { polygonProvider } from "./providers";
+
 type Tweet = {
   id: string;
   date: DateTime;
@@ -31,7 +33,6 @@ const useStore = createStore<State>((set) => ({
 }));
 
 export const useTimeline = () => {
-  const { provider, account } = useWallet();
   const tweets = useStore((state) => state.tweets);
   const addTweet = useStore((state) => state.addTweet);
 
@@ -40,8 +41,6 @@ export const useTimeline = () => {
   );
 
   useEffect(() => {
-    if (!provider || !account) return;
-
     const addTweetEvent = (event: TweetedEvent) => {
       addTweet({
         id: event.args.id.toString(),
@@ -53,7 +52,7 @@ export const useTimeline = () => {
 
     const contract = Tweeter__factory.connect(
       addresses.mumbai.Tweeter,
-      provider
+      polygonProvider
     );
     // TODO: filter by following
     const tweetFilter = contract.filters.Tweeted();
@@ -90,14 +89,14 @@ export const useTimeline = () => {
     };
 
     (async () => {
-      const currentBlock = await provider.getBlockNumber();
-      fetchEvents(currentBlock - 1, 1000);
+      const currentBlock = await polygonProvider.getBlockNumber();
+      fetchEvents(currentBlock - 1, 100000);
     })();
 
     return () => {
       contract.off(tweetFilter, tweetListener);
     };
-  }, [provider, account, addTweet]);
+  }, [addTweet]);
 
   return timeline;
 };

@@ -8,7 +8,8 @@ export const AccountName = ({ address }: Props) => {
   const { name } = useENS(address);
   return (
     <span title={address}>
-      {name || address.replace(/^(0x\w{3})\w+(\w{4})$/, "$1…$2")}
+      {name ||
+        address.replace(/^(0x[0-9A-F]{3})[0-9A-F]+([0-9A-F]{4})$/i, "$1…$2")}
     </span>
   );
 };

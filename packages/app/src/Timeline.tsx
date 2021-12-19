@@ -7,6 +7,7 @@ import { AccountName } from "./AccountName";
 import { Avatar } from "./Avatar";
 import { RelativeTime } from "./RelativeTime";
 import { useTimeline } from "./useTimeline";
+import { useTransaction, WalletState } from "./useTransaction";
 import { useWallet } from "./useWallet";
 
 const chainId = 80001;
@@ -16,40 +17,23 @@ export const Timeline = () => {
   const tweets = useTimeline();
   const [message, setMessage] = useState("");
 
-  const isWrongChain = provider && provider.network.chainId !== chainId;
+  const { sendTransaction, walletState, walletError } = useTransaction(
+    async (provider) => {
+      const contract = Tweeter__factory.connect(
+        addresses.mumbai.Tweeter,
+        provider.getSigner()
+      );
+      return contract.tweet(message);
+    }
+  );
 
   return (
     <div className="flex flex-col flex-wrap divide-y border">
       <form
         onSubmit={async (event) => {
           event.preventDefault();
-
-          if (!provider) {
-            connect();
-            return;
-          }
-
-          if (isWrongChain) {
-            // TODO: offer to add chain config if this fails
-            // https://github.com/kesne/ethereal-react/blob/c1645b231f741df5dde28d87c91e8937c8a9443f/packages/ethereal-react/src/network.tsx#L62-L75
-            provider.send("wallet_switchEthereumChain", [
-              { chainId: `0x${chainId.toString(16)}` },
-            ]);
-            return;
-          }
-
-          const contract = Tweeter__factory.connect(
-            addresses.mumbai.Tweeter,
-            provider.getSigner()
-          );
-
-          // TODO: pending indicators and/or optimistic UI updates
-          console.log("asking wallet to send tweet", message);
-          const tx = await contract.tweet(message);
-          console.log("tweet pending");
+          await sendTransaction();
           setMessage("");
-          await tx.wait();
-          console.log("tweet sent");
         }}
       >
         <div className="flex flex-col gap-4 py-4">
@@ -73,13 +57,13 @@ export const Timeline = () => {
             <button
               type="submit"
               className="self-end rounded-full bg-blue-500 px-4 py-2 font-bold text-white transition disabled:opacity-60 disabled:hover:bg-blue-500 hover:bg-blue-600 active:bg-blue-700"
-              disabled={!message}
+              disabled={!message || walletState !== WalletState.idle}
             >
               Tweet
             </button>
-            {isWrongChain && message ? (
-              <div className="bg-yellow-300 px-2 py-1">
-                Please switch to Polygon testnet (mumbai)
+            {walletError ? (
+              <div className="px-2 py-1 text-sm text-red-500 border border-2 border-red-200 border-dashed bor">
+                <strong>Error:</strong> {walletError.message}
               </div>
             ) : null}
           </div>

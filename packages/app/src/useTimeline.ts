@@ -1,4 +1,3 @@
-import { useWallet } from "@gimmixorg/use-wallet";
 import addresses from "@tweets-on-chain/contracts/addresses.json";
 import { Tweeter__factory } from "@tweets-on-chain/contracts/typechain-types";
 import { TypedListener } from "@tweets-on-chain/contracts/typechain-types/common";

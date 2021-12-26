@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AccountAvatar } from "./AccountAvatar";
 import { AccountName } from "./AccountName";
 import { Avatar } from "./Avatar";
+import { PendingIcon } from "./icons/PendingIcon";
 import { RelativeTime } from "./RelativeTime";
 import { useTimeline } from "./useTimeline";
 import { useTransaction, WalletState } from "./useTransaction";
@@ -40,13 +41,14 @@ export const Timeline = () => {
             <div className="flex flex-col flex-wrap w-full">
               <div className="flex text-xl py-2">
                 <textarea
-                  className="w-full h-16 outline-none resize-none"
+                  className="w-full h-16 outline-none resize-none disabled:opacity-60"
                   placeholder="What's happening?"
                   value={message}
                   onChange={(event) => {
                     setMessage(event.currentTarget.value);
                   }}
                   required
+                  disabled={walletState !== WalletState.idle}
                 />
               </div>
             </div>
@@ -67,6 +69,11 @@ export const Timeline = () => {
           </div>
         </div>
       </form>
+      {!chirps.length ? (
+        <div className="p-10 flex items-center justify-center text-2xl text-blue-500">
+          <PendingIcon />
+        </div>
+      ) : null}
       {chirps.map((chirp) => (
         <div
           key={chirp.id}

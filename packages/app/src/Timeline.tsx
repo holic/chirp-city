@@ -77,7 +77,7 @@ export const Timeline = () => {
       {chirps.map((chirp) => (
         <div
           key={chirp.id}
-          className="p-4 flex gap-4 hover:cursor-pointer hover:bg-gray-100"
+          className="p-4 flex gap-4 hover:cursor-pointer hover:bg-gray-100 relative"
         >
           <AccountAvatar address={chirp.from} />
           <div className="flex flex-col flex-wrap">
@@ -86,7 +86,9 @@ export const Timeline = () => {
                 <AccountName address={chirp.from} />
               </div>
               <div>·</div>
-              <RelativeTime date={chirp.date} />
+              <a href={chirp.url} className="expand-link">
+                <RelativeTime date={chirp.date} />
+              </a>
             </div>
             <div>{chirp.message}</div>
           </div>

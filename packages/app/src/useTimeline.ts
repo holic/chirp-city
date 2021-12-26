@@ -13,6 +13,7 @@ type Chirp = {
   date: DateTime;
   from: string;
   message: string;
+  url: string;
 };
 
 type State = {
@@ -41,11 +42,14 @@ export const useTimeline = () => {
 
   useEffect(() => {
     const addChirpEvent = (event: ChirpedEvent) => {
+      const id = event.args.id.toString();
+      const from = event.args.from;
       addChirp({
-        id: event.args.id.toString(),
+        id,
         date: DateTime.fromSeconds(event.args.timestamp.toNumber()),
-        from: event.args.from,
+        from,
         message: event.args.message,
+        url: `/${from}/chirps/${id}`,
       });
     };
 

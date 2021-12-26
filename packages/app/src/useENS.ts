@@ -2,17 +2,12 @@ import { useEffect } from "react";
 import createStore from "zustand";
 import { persist } from "zustand/middleware";
 
-import { ethereumProvider } from "./providers";
-
 type State = {
   addressToName: Partial<Record<string, string | null>>;
   addressToAvatar: Partial<Record<string, string | null>>;
   setName: (address: string, name: string | null) => void;
   setAvatar: (address: string, avatar: string | null) => void;
 };
-
-// TODO: expire persisted store and/or values after a period of time
-// TODO: move to our own backend so we don't have to do this for every user?
 
 const useStore = createStore<State>(
   persist(
@@ -49,21 +44,21 @@ export const useENS = (address: string) => {
   const setAvatar = useStore((state) => state.setAvatar);
 
   useEffect(() => {
-    if (cachedName !== undefined) return;
     if (lookups[address]) return;
     (async () => {
       lookups[address] = true;
 
       console.log("doing look up for", address);
 
-      // TODO: timeout on pending lookup?
-      const name = await ethereumProvider.lookupAddress(address);
-      // TODO: does zustand handle state updates after unmount?
-      setName(address, name);
+      try {
+        const data = await fetch(
+          `https://api.ensideas.com/ens/resolve/${address}`
+        ).then((res) => res.json());
 
-      if (name) {
-        const avatar = await ethereumProvider.getAvatar(name);
-        setAvatar(address, avatar);
+        setName(address, data.name);
+        setAvatar(address, data.avatar);
+      } catch (error) {
+        console.log("could not resolve ens", error);
       }
     })();
   }, [address, cachedName, setName, setAvatar]);

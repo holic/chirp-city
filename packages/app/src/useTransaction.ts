@@ -49,7 +49,7 @@ export const useTransaction = (
   // TODO: don't send transaction if wallet is in a non-idle state?
   // TODO: catch errors and build better messages
 
-  const sendTransaction = useCallback(async (): Promise<void> => {
+  const sendTransaction = useCallback(async (): Promise<boolean> => {
     let currentProvider = provider;
 
     if (!currentProvider) {
@@ -68,7 +68,7 @@ export const useTransaction = (
           walletError = new Error("Could not connect to wallet");
         }
         useStore.setState({ walletState: WalletState.idle, walletError });
-        return;
+        return false;
       }
     }
 
@@ -98,7 +98,7 @@ export const useTransaction = (
       }
     } catch (walletError: any) {
       useStore.setState({ walletState: WalletState.idle, walletError });
-      return;
+      return false;
     }
 
     debug("asking wallet to send transaction");
@@ -109,7 +109,7 @@ export const useTransaction = (
     } catch (walletError: any) {
       console.log("got error", walletError);
       useStore.setState({ walletState: WalletState.idle, walletError });
-      return;
+      return false;
     }
 
     debug("waiting for transaction confirmations");
@@ -118,11 +118,12 @@ export const useTransaction = (
       await tx.wait();
     } catch (walletError: any) {
       useStore.setState({ walletState: WalletState.idle, walletError });
-      return;
+      return false;
     }
 
     debug("transaction complete!");
     useStore.setState({ walletState: WalletState.idle, walletError: null });
+    return true;
   }, [connect, createTransaction, provider]);
 
   return { sendTransaction, walletState, walletError };

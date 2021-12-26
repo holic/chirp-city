@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AccountAvatar } from "./AccountAvatar";
 import { AccountName } from "./AccountName";
 import { Avatar } from "./Avatar";
+import { Button } from "./Button";
 import { PendingIcon } from "./icons/PendingIcon";
 import { RelativeTime } from "./RelativeTime";
 import { useTimeline } from "./useTimeline";
@@ -26,13 +27,16 @@ export const Timeline = () => {
     }
   );
 
+  const pending = walletState !== WalletState.idle;
+
   return (
     <div className="flex flex-col flex-wrap divide-y border">
       <form
         onSubmit={async (event) => {
           event.preventDefault();
-          await sendTransaction();
-          setMessage("");
+          if (await sendTransaction()) {
+            setMessage("");
+          }
         }}
       >
         <div className="flex flex-col gap-4 py-4">
@@ -48,19 +52,15 @@ export const Timeline = () => {
                     setMessage(event.currentTarget.value);
                   }}
                   required
-                  disabled={walletState !== WalletState.idle}
+                  disabled={pending}
                 />
               </div>
             </div>
           </div>
           <div className="px-4 flex gap-4 justify-between items-center flex-row-reverse">
-            <button
-              type="submit"
-              className="self-end rounded-full bg-blue-500 px-4 py-2 font-bold text-white transition disabled:opacity-60 disabled:hover:bg-blue-500 hover:bg-blue-600 active:bg-blue-700"
-              disabled={!message || walletState !== WalletState.idle}
-            >
+            <Button type="submit" disabled={!message} pending={pending}>
               Chirp
-            </button>
+            </Button>
             {walletError ? (
               <div className="px-2 py-1 text-sm text-red-500 border border-2 border-red-200 border-dashed bor">
                 <strong>Error:</strong> {walletError.message}

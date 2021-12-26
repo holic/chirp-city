@@ -20,10 +20,10 @@ importers:
 
   packages/app:
     specifiers:
+      '@chirp-city/contracts': workspace:*
       '@ethersproject/address': ^5.5.0
       '@ethersproject/contracts': ^5.5.0
       '@ethersproject/providers': ^5.5.0
-      '@tweets-on-chain/contracts': workspace:*
       '@types/debug': ^4.1.7
       '@types/luxon': ^2.0.8
       '@types/node': 17.0.0
@@ -42,10 +42,10 @@ importers:
       web3modal: ^1.9.4
       zustand: ^3.6.7
     dependencies:
+      '@chirp-city/contracts': link:../contracts
       '@ethersproject/address': 5.5.0
       '@ethersproject/contracts': 5.5.0
       '@ethersproject/providers': 5.5.1
-      '@tweets-on-chain/contracts': link:../contracts
       debug: 4.3.3
       luxon: 2.2.0
       next: 12.0.7_react-dom@17.0.2+react@17.0.2

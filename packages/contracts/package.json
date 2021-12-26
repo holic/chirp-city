@@ -1,5 +1,5 @@
 {
-  "name": "@tweets-on-chain/contracts",
+  "name": "@chirp-city/contracts",
   "private": true,
   "scripts": {
     "start": "hardhat node",

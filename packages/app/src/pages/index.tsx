@@ -1,4 +1,3 @@
-import addresses from "@tweets-on-chain/contracts/addresses.json";
 import type { NextPage } from "next";
 import Head from "next/head";
 
@@ -8,7 +7,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Tweets on chain</title>
+        <title>Chirp City</title>
       </Head>
 
       <div className="flex flex-col flex-wrap items-center">

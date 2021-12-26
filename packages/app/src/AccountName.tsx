@@ -6,6 +6,7 @@ type Props = {
 
 export const AccountName = ({ address }: Props) => {
   const { name } = useENS(address);
+
   return (
     <span title={address}>
       {name ||

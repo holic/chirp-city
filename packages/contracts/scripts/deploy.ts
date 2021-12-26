@@ -2,7 +2,7 @@ import { ContractFactory } from "ethers";
 import fs from "fs/promises";
 import hre, { ethers, network } from "hardhat";
 
-import { Tweeter__factory } from "../typechain-types";
+import { ChirpCity__factory } from "../typechain-types";
 
 const exists = (path: string) =>
   fs
@@ -11,7 +11,7 @@ const exists = (path: string) =>
     .catch(() => false);
 
 const deployContract = async (factory: ContractFactory) => {
-  const addressesPath = `${__dirname}/../addresses.json`;
+  const addressesPath = `${__dirname}/../deploys.json`;
   const addressBook = (await exists(addressesPath))
     ? JSON.parse((await fs.readFile(addressesPath)).toString())
     : {};
@@ -30,6 +30,9 @@ const deployContract = async (factory: ContractFactory) => {
   console.log("Waiting for confirmation…");
   await contract.deployed();
 
+  console.log("Waiting for more confirmations before verify…");
+  const tx = await contract.deployTransaction.wait(10);
+
   await fs.writeFile(
     addressesPath,
     JSON.stringify(
@@ -37,16 +40,16 @@ const deployContract = async (factory: ContractFactory) => {
         ...addressBook,
         [network.name]: {
           ...addresses,
-          [contractName]: contract.address,
+          [contractName]: {
+            address: contract.address,
+            blockNumber: tx.blockNumber,
+          },
         },
       },
       null,
       2
     )
   );
-
-  console.log("Waiting for more confirmations before verify…");
-  await contract.deployTransaction.wait(10);
 
   console.log("Verifying contract…");
   await hre.run("verify:verify", {
@@ -57,7 +60,7 @@ const deployContract = async (factory: ContractFactory) => {
 
 async function start() {
   const [deployer] = await ethers.getSigners();
-  await deployContract(new Tweeter__factory(deployer));
+  await deployContract(new ChirpCity__factory(deployer));
 
   console.log("Done!");
 }

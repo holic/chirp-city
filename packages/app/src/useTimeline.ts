@@ -1,14 +1,14 @@
-import addresses from "@tweets-on-chain/contracts/addresses.json";
-import { Tweeter__factory } from "@tweets-on-chain/contracts/typechain-types";
-import { TypedListener } from "@tweets-on-chain/contracts/typechain-types/common";
-import { TweetedEvent } from "@tweets-on-chain/contracts/typechain-types/Tweeter";
+import deploys from "@chirp-city/contracts/deploys.json";
+import { ChirpCity__factory } from "@chirp-city/contracts/typechain-types";
+import { ChirpedEvent } from "@chirp-city/contracts/typechain-types/ChirpCity";
+import { TypedListener } from "@chirp-city/contracts/typechain-types/common";
 import { DateTime } from "luxon";
 import { useEffect } from "react";
 import createStore from "zustand";
 
 import { polygonProvider } from "./providers";
 
-type Tweet = {
+type Chirp = {
   id: string;
   date: DateTime;
   from: string;
@@ -16,32 +16,32 @@ type Tweet = {
 };
 
 type State = {
-  tweets: Record<Tweet["id"], Tweet>;
-  addTweet: (tweet: Tweet) => void;
+  chirps: Record<Chirp["id"], Chirp>;
+  addChirp: (chirp: Chirp) => void;
 };
 
 const useStore = createStore<State>((set) => ({
-  tweets: {},
-  addTweet: (tweet) =>
+  chirps: {},
+  addChirp: (chirp) =>
     set((state) => ({
-      tweets: {
-        ...state.tweets,
-        [tweet.id]: tweet,
+      chirps: {
+        ...state.chirps,
+        [chirp.id]: chirp,
       },
     })),
 }));
 
 export const useTimeline = () => {
-  const tweets = useStore((state) => state.tweets);
-  const addTweet = useStore((state) => state.addTweet);
+  const chirps = useStore((state) => state.chirps);
+  const addChirp = useStore((state) => state.addChirp);
 
-  const timeline = Object.values(tweets).sort(
+  const timeline = Object.values(chirps).sort(
     (a, b) => b.date.toSeconds() - a.date.toSeconds()
   );
 
   useEffect(() => {
-    const addTweetEvent = (event: TweetedEvent) => {
-      addTweet({
+    const addChirpEvent = (event: ChirpedEvent) => {
+      addChirp({
         id: event.args.id.toString(),
         date: DateTime.fromSeconds(event.args.timestamp.toNumber()),
         from: event.args.from,
@@ -49,40 +49,37 @@ export const useTimeline = () => {
       });
     };
 
-    const contract = Tweeter__factory.connect(
-      addresses.mumbai.Tweeter,
+    const contract = ChirpCity__factory.connect(
+      deploys.mumbai.ChirpCity.address,
       polygonProvider
     );
     // TODO: filter by following
-    const tweetFilter = contract.filters.Tweeted();
-    const tweetListener: TypedListener<TweetedEvent> = (
+    const chirpFilter = contract.filters.Chirped();
+    const chirpListener: TypedListener<ChirpedEvent> = (
       from,
       id,
       timestamp,
       message,
       event
     ) => {
-      console.log("got tweet from", from, ":", message, event);
-      addTweetEvent(event);
+      console.log("got chirp from", from, ":", message, event);
+      addChirpEvent(event);
     };
-    contract.on(tweetFilter, tweetListener);
-
-    // TODO: record this as part of the deploy or fetch from deploy tx
-    const firstBlock = 22727314;
+    contract.on(chirpFilter, chirpListener);
 
     // TODO: cache which blocks we've fetched from in zustand/localStorage
     const fetchEvents = async (fromBlock: number, numBlocks: number) => {
       // TODO: stop fetching on unmount
-      if (fromBlock < firstBlock) return;
+      if (fromBlock < deploys.mumbai.ChirpCity.blockNumber) return;
 
       const events = await contract.queryFilter(
-        tweetFilter,
+        chirpFilter,
         fromBlock - numBlocks,
         fromBlock
       );
 
       console.log("got events", events);
-      events.map(addTweetEvent);
+      events.map(addChirpEvent);
 
       await fetchEvents(fromBlock - numBlocks, numBlocks);
     };
@@ -93,9 +90,9 @@ export const useTimeline = () => {
     })();
 
     return () => {
-      contract.off(tweetFilter, tweetListener);
+      contract.off(chirpFilter, chirpListener);
     };
-  }, [addTweet]);
+  }, [addChirp]);
 
   return timeline;
 };

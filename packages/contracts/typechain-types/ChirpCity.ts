@@ -17,41 +17,41 @@ import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
-export interface TweeterInterface extends utils.Interface {
+export interface ChirpCityInterface extends utils.Interface {
   functions: {
-    "tweet(string)": FunctionFragment;
-    "tweets(uint256)": FunctionFragment;
+    "chirp(string)": FunctionFragment;
+    "chirps(uint256)": FunctionFragment;
   };
 
-  encodeFunctionData(functionFragment: "tweet", values: [string]): string;
+  encodeFunctionData(functionFragment: "chirp", values: [string]): string;
   encodeFunctionData(
-    functionFragment: "tweets",
+    functionFragment: "chirps",
     values: [BigNumberish]
   ): string;
 
-  decodeFunctionResult(functionFragment: "tweet", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "tweets", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "chirp", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "chirps", data: BytesLike): Result;
 
   events: {
-    "Tweeted(address,uint256,uint256,string)": EventFragment;
+    "Chirped(address,uint256,uint256,string)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Tweeted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Chirped"): EventFragment;
 }
 
-export type TweetedEvent = TypedEvent<
+export type ChirpedEvent = TypedEvent<
   [string, BigNumber, BigNumber, string],
   { from: string; id: BigNumber; timestamp: BigNumber; message: string }
 >;
 
-export type TweetedEventFilter = TypedEventFilter<TweetedEvent>;
+export type ChirpedEventFilter = TypedEventFilter<ChirpedEvent>;
 
-export interface Tweeter extends BaseContract {
+export interface ChirpCity extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: TweeterInterface;
+  interface: ChirpCityInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -73,12 +73,12 @@ export interface Tweeter extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    tweet(
+    chirp(
       message: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    tweets(
+    chirps(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
@@ -90,12 +90,12 @@ export interface Tweeter extends BaseContract {
     >;
   };
 
-  tweet(
+  chirp(
     message: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  tweets(
+  chirps(
     arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
@@ -107,9 +107,9 @@ export interface Tweeter extends BaseContract {
   >;
 
   callStatic: {
-    tweet(message: string, overrides?: CallOverrides): Promise<void>;
+    chirp(message: string, overrides?: CallOverrides): Promise<void>;
 
-    tweets(
+    chirps(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
@@ -122,36 +122,36 @@ export interface Tweeter extends BaseContract {
   };
 
   filters: {
-    "Tweeted(address,uint256,uint256,string)"(
+    "Chirped(address,uint256,uint256,string)"(
       from?: string | null,
       id?: null,
       timestamp?: null,
       message?: null
-    ): TweetedEventFilter;
-    Tweeted(
+    ): ChirpedEventFilter;
+    Chirped(
       from?: string | null,
       id?: null,
       timestamp?: null,
       message?: null
-    ): TweetedEventFilter;
+    ): ChirpedEventFilter;
   };
 
   estimateGas: {
-    tweet(
+    chirp(
       message: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    tweets(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    chirps(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    tweet(
+    chirp(
       message: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    tweets(
+    chirps(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;

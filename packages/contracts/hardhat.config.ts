@@ -11,7 +11,15 @@ dotenv.config();
  * @type import('hardhat/config').HardhatUserConfig
  */
 export default {
-  solidity: "0.8.9",
+  solidity: {
+    version: "0.8.9",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1000,
+      },
+    },
+  },
   networks: {
     hardhat: {
       chainId: 1337,
@@ -27,5 +35,11 @@ export default {
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
+  },
+  gasReporter: {
+    currency: "USD",
+    gasPrice: 100,
+    token: "MATIC",
+    coinmarketcap: process.env.COINMARKETCAP_API_KEY,
   },
 };

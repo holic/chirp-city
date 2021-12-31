@@ -1,26 +1,46 @@
 // SPDX-License-Identifier: CC0-1.0
 
-pragma solidity >=0.7.0 <0.9.0;
-
-import "@openzeppelin/contracts/utils/Counters.sol";
+pragma solidity ^0.8.9;
 
 contract ChirpCity {
-    using Counters for Counters.Counter;
-
-    struct Chirp {
-        address from;
+    struct Message {
         uint256 timestamp;
-        string message;
+        uint256 parentId;
+        address from;
+        string body;
     }
 
-    Counters.Counter private id;
-    mapping(uint256 => Chirp) public chirps;
+    uint256 private currentId;
+    mapping(uint256 => Message) public messages;
 
-    event Chirped(address indexed from, uint256 id, uint256 timestamp, string message);
+    event ChirpCityMessage(address indexed from, uint256 id);
+    event ChirpCityMention(address indexed to, uint256 id);
+    event ChirpCityReply(address indexed to, uint256 id);
 
-    function chirp(string calldata message) external {
-        id.increment();
-        chirps[id.current()] = Chirp(msg.sender, block.timestamp, message);
-        emit Chirped(msg.sender, id.current(), block.timestamp, message);
+    error MessageNotFound();
+    error TooManyMentions();
+    error MessageTooLong();
+
+    function chirp(string calldata body, uint256 parentId, address[] calldata mentions) external {
+        if (parentId != 0 && messages[parentId].from == address(0))
+            revert MessageNotFound();
+
+        if (mentions.length > 16)
+            revert TooManyMentions();
+
+        if (bytes(body).length > 256)
+            revert MessageTooLong();
+
+        currentId++;
+
+        messages[currentId] = Message(block.timestamp, parentId, msg.sender, body);
+
+        emit ChirpCityMessage(msg.sender, currentId);
+        if (parentId != 0) {
+            emit ChirpCityReply(messages[parentId].from, currentId);
+        }
+        for (uint8 i = 0; i < mentions.length; i++) {
+            emit ChirpCityMention(mentions[i], currentId);
+        }
     }
 }

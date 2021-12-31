@@ -9,5 +9,5 @@
     "isolatedModules": true,
     "incremental": true,
     "noEmit": true
-  }
+  },
 }

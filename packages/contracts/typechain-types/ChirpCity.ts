@@ -4,7 +4,6 @@
 import {
   BaseContract,
   BigNumber,
-  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -19,55 +18,27 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface ChirpCityInterface extends utils.Interface {
   functions: {
-    "chirp(string,uint256,address[])": FunctionFragment;
-    "messages(uint256)": FunctionFragment;
+    "chirp(string)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "chirp",
-    values: [string, BigNumberish, string[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "messages",
-    values: [BigNumberish]
-  ): string;
+  encodeFunctionData(functionFragment: "chirp", values: [string]): string;
 
   decodeFunctionResult(functionFragment: "chirp", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "messages", data: BytesLike): Result;
 
   events: {
-    "ChirpCityMention(address,uint256)": EventFragment;
-    "ChirpCityMessage(address,uint256)": EventFragment;
-    "ChirpCityReply(address,uint256)": EventFragment;
+    "ChirpCityMessage(address,string)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "ChirpCityMention"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ChirpCityMessage"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ChirpCityReply"): EventFragment;
 }
 
-export type ChirpCityMentionEvent = TypedEvent<
-  [string, BigNumber],
-  { to: string; id: BigNumber }
->;
-
-export type ChirpCityMentionEventFilter =
-  TypedEventFilter<ChirpCityMentionEvent>;
-
 export type ChirpCityMessageEvent = TypedEvent<
-  [string, BigNumber],
-  { from: string; id: BigNumber }
+  [string, string],
+  { from: string; message: string }
 >;
 
 export type ChirpCityMessageEventFilter =
   TypedEventFilter<ChirpCityMessageEvent>;
-
-export type ChirpCityReplyEvent = TypedEvent<
-  [string, BigNumber],
-  { to: string; id: BigNumber }
->;
-
-export type ChirpCityReplyEventFilter = TypedEventFilter<ChirpCityReplyEvent>;
 
 export interface ChirpCity extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -97,113 +68,42 @@ export interface ChirpCity extends BaseContract {
 
   functions: {
     chirp(
-      body: string,
-      parentId: BigNumberish,
-      mentions: string[],
+      message: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    messages(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, string, string] & {
-        timestamp: BigNumber;
-        parentId: BigNumber;
-        from: string;
-        body: string;
-      }
-    >;
   };
 
   chirp(
-    body: string,
-    parentId: BigNumberish,
-    mentions: string[],
+    message: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  messages(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber, string, string] & {
-      timestamp: BigNumber;
-      parentId: BigNumber;
-      from: string;
-      body: string;
-    }
-  >;
-
   callStatic: {
-    chirp(
-      body: string,
-      parentId: BigNumberish,
-      mentions: string[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    messages(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber, string, string] & {
-        timestamp: BigNumber;
-        parentId: BigNumber;
-        from: string;
-        body: string;
-      }
-    >;
+    chirp(message: string, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "ChirpCityMention(address,uint256)"(
-      to?: string | null,
-      id?: null
-    ): ChirpCityMentionEventFilter;
-    ChirpCityMention(
-      to?: string | null,
-      id?: null
-    ): ChirpCityMentionEventFilter;
-
-    "ChirpCityMessage(address,uint256)"(
+    "ChirpCityMessage(address,string)"(
       from?: string | null,
-      id?: null
+      message?: null
     ): ChirpCityMessageEventFilter;
     ChirpCityMessage(
       from?: string | null,
-      id?: null
+      message?: null
     ): ChirpCityMessageEventFilter;
-
-    "ChirpCityReply(address,uint256)"(
-      to?: string | null,
-      id?: null
-    ): ChirpCityReplyEventFilter;
-    ChirpCityReply(to?: string | null, id?: null): ChirpCityReplyEventFilter;
   };
 
   estimateGas: {
     chirp(
-      body: string,
-      parentId: BigNumberish,
-      mentions: string[],
+      message: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    messages(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     chirp(
-      body: string,
-      parentId: BigNumberish,
-      mentions: string[],
+      message: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    messages(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

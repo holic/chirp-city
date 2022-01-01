@@ -1,11 +1,13 @@
 import deploys from "@chirp-city/contracts/deploys.json";
 import { ChirpCity__factory } from "@chirp-city/contracts/typechain-types";
+import Link from "next/link";
 import { useState } from "react";
 
 import { AccountAvatar } from "./AccountAvatar";
 import { AccountName } from "./AccountName";
 import { Avatar } from "./Avatar";
 import { Button } from "./Button";
+import { Chirp } from "./Chirp";
 import { PendingIcon } from "./icons/PendingIcon";
 import { RelativeTime } from "./RelativeTime";
 import { useTimeline } from "./useTimeline";
@@ -75,24 +77,7 @@ export const Timeline = () => {
         </div>
       ) : null}
       {chirps.map((chirp) => (
-        <div
-          key={chirp.id}
-          className="p-4 flex gap-4 hover:cursor-pointer hover:bg-gray-100 relative"
-        >
-          <AccountAvatar address={chirp.from} />
-          <div className="flex flex-col flex-wrap">
-            <div className="flex flex-wrap gap-2 text-gray-500">
-              <div className="font-bold">
-                <AccountName address={chirp.from} />
-              </div>
-              <div>·</div>
-              <a href={chirp.url} className="expand-link">
-                <RelativeTime date={chirp.date} />
-              </a>
-            </div>
-            <div>{chirp.message}</div>
-          </div>
-        </div>
+        <Chirp key={chirp.id} chirp={chirp} fullLink />
       ))}
     </div>
   );

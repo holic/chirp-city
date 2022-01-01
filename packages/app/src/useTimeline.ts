@@ -1,20 +1,13 @@
 import deploys from "@chirp-city/contracts/deploys.json";
-import { ChirpCity__factory } from "@chirp-city/contracts/typechain-types";
-import { ChirpedEvent } from "@chirp-city/contracts/typechain-types/ChirpCity";
+import { ChirpCityMessageEvent } from "@chirp-city/contracts/typechain-types/ChirpCity";
 import { TypedListener } from "@chirp-city/contracts/typechain-types/common";
 import { DateTime } from "luxon";
 import { useEffect } from "react";
 import createStore from "zustand";
 
-import { polygonProvider } from "./providers";
-
-type Chirp = {
-  id: string;
-  date: DateTime;
-  from: string;
-  message: string;
-  url: string;
-};
+import { chirpCityContract } from "./contracts";
+import { Chirp } from "./types";
+import { useStore as useENSStore } from "./useENS";
 
 type State = {
   chirps: Record<Chirp["id"], Chirp>;
@@ -41,42 +34,40 @@ export const useTimeline = () => {
   );
 
   useEffect(() => {
-    const addChirpEvent = (event: ChirpedEvent) => {
-      const id = event.args.id.toString();
+    const addChirpEvent = async (event: ChirpCityMessageEvent) => {
+      const block = await event.getBlock();
+      const id = `${block.number}:${event.logIndex}`;
       const from = event.args.from;
       addChirp({
         id,
-        date: DateTime.fromSeconds(event.args.timestamp.toNumber()),
+        date: DateTime.fromSeconds(block.timestamp),
         from,
         message: event.args.message,
-        url: `/${from}/chirps/${id}`,
+        get url() {
+          const name = useENSStore.getState().addressToName[from];
+          return `/${name || from}/chirps/${id}`;
+        },
       });
     };
 
-    const contract = ChirpCity__factory.connect(
-      deploys.mumbai.ChirpCity.address,
-      polygonProvider
-    );
     // TODO: filter by following
-    const chirpFilter = contract.filters.Chirped();
-    const chirpListener: TypedListener<ChirpedEvent> = (
+    const chirpFilter = chirpCityContract.filters.ChirpCityMessage();
+    const chirpListener: TypedListener<ChirpCityMessageEvent> = (
       from,
-      id,
-      timestamp,
       message,
       event
     ) => {
       console.log("got chirp from", from, ":", message, event);
       addChirpEvent(event);
     };
-    contract.on(chirpFilter, chirpListener);
+    chirpCityContract.on(chirpFilter, chirpListener);
 
     // TODO: cache which blocks we've fetched from in zustand/localStorage
     const fetchEvents = async (fromBlock: number, numBlocks: number) => {
       // TODO: stop fetching on unmount
       if (fromBlock < deploys.mumbai.ChirpCity.blockNumber) return;
 
-      const events = await contract.queryFilter(
+      const events = await chirpCityContract.queryFilter(
         chirpFilter,
         fromBlock - numBlocks,
         fromBlock
@@ -89,12 +80,12 @@ export const useTimeline = () => {
     };
 
     (async () => {
-      const currentBlock = await polygonProvider.getBlockNumber();
+      const currentBlock = await chirpCityContract.provider.getBlockNumber();
       fetchEvents(currentBlock - 1, 100000);
     })();
 
     return () => {
-      contract.off(chirpFilter, chirpListener);
+      chirpCityContract.off(chirpFilter, chirpListener);
     };
   }, [addChirp]);
 

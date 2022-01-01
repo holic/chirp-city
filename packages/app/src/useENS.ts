@@ -9,7 +9,7 @@ type State = {
   setAvatar: (address: string, avatar: string | null) => void;
 };
 
-const useStore = createStore<State>(
+export const useStore = createStore<State>(
   persist(
     (set) => ({
       addressToName: {},

@@ -1,0 +1,24 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: ChirpCity
+    network: mumbai
+    source:
+      address: "0x9c18B9B6a7E80EE6C9EfD92fD0A53F0bf30f0283"
+      abi: ChirpCity
+      startBlock: 23378454
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ChirpCityMessage
+      abis:
+        - name: ChirpCity
+          file: ./abis/ChirpCity.json
+      eventHandlers:
+        - event: ChirpCityMessage(indexed address,string)
+          handler: handleChirpCityMessage
+      file: ./src/mapping.ts

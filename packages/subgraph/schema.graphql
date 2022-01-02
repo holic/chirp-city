@@ -1,0 +1,6 @@
+type Message @entity {
+  id: ID!
+  timestamp: Int!
+  from: String!
+  message: String!
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@chirp-city/subgraph",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ holic/chirp-city",
+    "create-local": "graph create --node http://localhost:8020/ holic/chirp-city",
+    "remove-local": "graph remove --node http://localhost:8020/ holic/chirp-city",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 holic/chirp-city"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.25.1",
+    "@graphprotocol/graph-ts": "0.24.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0"
+  }
+}

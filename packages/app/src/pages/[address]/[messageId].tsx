@@ -2,9 +2,9 @@ import { DateTime } from "luxon";
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 
-import { Chirp } from "../../../Chirp";
-import { chirpCityContract } from "../../../contracts";
-import { firstParam } from "../../../firstParam";
+import { Chirp } from "../../Chirp";
+import { chirpCityContract } from "../../contracts";
+import { firstParam } from "../../firstParam";
 
 type Props = {
   id: string;
@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
   const address = firstParam(context.query.address);
-  const id = firstParam(context.query.id);
+  const id = firstParam(context.query.messageId);
 
   // TODO: 404 page instead?
   if (!address || !id) {
@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     };
   }
 
-  const [blockNumber, logIndex] = id.split(":");
+  const [_prefix, blockNumber, logIndex] = id.split(":");
 
   const chirpFilter = chirpCityContract.filters.ChirpCityMessage();
   const events = await chirpCityContract.queryFilter(

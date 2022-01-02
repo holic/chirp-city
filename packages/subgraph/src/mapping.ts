@@ -2,7 +2,7 @@ import { ChirpCityMessage } from "../generated/ChirpCity/ChirpCity";
 import { Message } from "../generated/schema";
 
 export function handleChirpCityMessage(event: ChirpCityMessage): void {
-  const id = `${event.block.number}:${event.logIndex}`;
+  const id = `chirp:${event.block.number}:${event.logIndex}`;
 
   // Messages are currently immutable so we shouldn't need to load an
   // existing message by the same ID before setting/saving.

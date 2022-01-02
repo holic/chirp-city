@@ -36,7 +36,7 @@ export const useTimeline = () => {
   useEffect(() => {
     const addChirpEvent = async (event: ChirpCityMessageEvent) => {
       const block = await event.getBlock();
-      const id = `${block.number}:${event.logIndex}`;
+      const id = `chirp:${block.number}:${event.logIndex}`;
       const from = event.args.from;
       addChirp({
         id,
@@ -45,7 +45,7 @@ export const useTimeline = () => {
         message: event.args.message,
         get url() {
           const name = useENSStore.getState().addressToName[from];
-          return `/${name || from}/chirps/${id}`;
+          return `/${name || from}/${id}`;
         },
       });
     };

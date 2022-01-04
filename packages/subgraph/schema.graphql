@@ -3,4 +3,6 @@ type Message @entity {
   timestamp: Int!
   from: String!
   message: String!
+  parents: [Message!]!
+  children: [Message!]! @derivedFrom(field: "parents")
 }

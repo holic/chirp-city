@@ -72,33 +72,34 @@ export const useTransaction = (
       }
     }
 
-    // Traditionally, you'd want to do something like:
-    //   - check wallet's network
-    //   - call `wallet_switchEthereumChain`
-    //   - catch the `4902` error code
-    //   - call `wallet_addEthereumChain`
-    //
-    // But it seems that, at least MetaMask, will do all that for you
-    // by just calling `wallet_addEthereumChain`. If you're already
-    // connected to that network, the call is ignored. If you already
-    // have the network, then it just prompts to switch. If you don't
-    // have the network, it prompts you to add + switch. Great!
-    //
-    // TODO: check if this works for other wallets
+    // TODO: check this for metamask-provided chain IDs (doing just add and not switch gave an error)
     debug("asking wallet to add/switch network");
     useStore.setState({ walletState: WalletState.switchingNetwork });
     try {
-      await currentProvider.send("wallet_addEthereumChain", [chain]);
-      // Immediately check if the network is correct, because web3modal
-      // doesn't throw if the network switch is cancelled from above call
-      // https://github.com/Web3Modal/web3modal/issues/363
-      const currentNetwork = await currentProvider.getNetwork();
-      if (currentNetwork.chainId !== chainId) {
-        throw new Error(`You must switch your wallet to ${chain.chainName}`);
+      await currentProvider.send("wallet_switchEthereumChain", [
+        { chainId: chain.chainId },
+      ]);
+    } catch (switchError: any) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      if (switchError.code === 4902) {
+        try {
+          await currentProvider.send("wallet_addEthereumChain", [chain]);
+          // Immediately check if the network is correct, because web3modal
+          // doesn't throw if the network switch is cancelled from above call
+          // https://github.com/Web3Modal/web3modal/issues/363
+          const currentNetwork = await currentProvider.getNetwork();
+          if (currentNetwork.chainId !== chainId) {
+            throw new Error(
+              `You must switch your wallet to ${chain.chainName}`
+            );
+          }
+        } catch (walletError: any) {
+          useStore.setState({ walletState: WalletState.idle, walletError });
+          return false;
+        }
+      } else {
+        throw switchError;
       }
-    } catch (walletError: any) {
-      useStore.setState({ walletState: WalletState.idle, walletError });
-      return false;
     }
 
     debug("asking wallet to send transaction");

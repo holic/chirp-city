@@ -37,7 +37,7 @@ export const Chirp = ({ chirp, fullLink }: Props) => (
           </a>
         </Link>
       </div>
-      <div>{chirp.message}</div>
+      <div className="whitespace-pre-wrap">{chirp.message}</div>
     </div>
   </div>
 );

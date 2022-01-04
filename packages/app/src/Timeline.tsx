@@ -8,6 +8,7 @@ import { AccountName } from "./AccountName";
 import { Avatar } from "./Avatar";
 import { Button } from "./Button";
 import { Chirp } from "./Chirp";
+import { chirpCityContract } from "./contracts";
 import { PendingIcon } from "./icons/PendingIcon";
 import { RelativeTime } from "./RelativeTime";
 import { useTimeline } from "./useTimeline";
@@ -21,11 +22,7 @@ export const Timeline = () => {
 
   const { sendTransaction, walletState, walletError } = useTransaction(
     async (provider) => {
-      const contract = ChirpCity__factory.connect(
-        deploys.mumbai.ChirpCity.address,
-        provider.getSigner()
-      );
-      return contract.chirp(message);
+      return chirpCityContract.connect(provider.getSigner()).chirp(message);
     }
   );
 

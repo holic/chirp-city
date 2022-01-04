@@ -73,7 +73,7 @@ export const useTimeline = () => {
         fromBlock
       );
 
-      console.log("got events", events);
+      console.log("got events for", fromBlock, events);
       events.map(addChirpEvent);
 
       await fetchEvents(fromBlock - numBlocks, numBlocks);

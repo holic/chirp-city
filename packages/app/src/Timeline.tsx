@@ -1,23 +1,31 @@
-import deploys from "@chirp-city/contracts/deploys.json";
-import { ChirpCity__factory } from "@chirp-city/contracts/typechain-types";
-import Link from "next/link";
-import { useState } from "react";
+import { DateTime } from "luxon";
+import { useEffect, useState } from "react";
 
 import { AccountAvatar } from "./AccountAvatar";
-import { AccountName } from "./AccountName";
 import { Avatar } from "./Avatar";
 import { Button } from "./Button";
 import { Chirp } from "./Chirp";
+import { useTimelineQuery } from "./codegen/subgraph";
 import { chirpCityContract } from "./contracts";
 import { PendingIcon } from "./icons/PendingIcon";
-import { RelativeTime } from "./RelativeTime";
-import { useTimeline } from "./useTimeline";
 import { useTransaction, WalletState } from "./useTransaction";
 import { useWallet } from "./useWallet";
 
 export const Timeline = () => {
-  const { account, provider, connect } = useWallet();
-  const chirps = useTimeline();
+  const [query, refetchQuery] = useTimelineQuery({
+    // Prevent executing query server side for now
+    // TODO: populate this server side?
+    pause: typeof window === "undefined",
+  });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      refetchQuery({ requestPolicy: "cache-and-network" });
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [refetchQuery]);
+
+  const { account } = useWallet();
   const [message, setMessage] = useState("");
 
   const { sendTransaction, walletState, walletError } = useTransaction(
@@ -68,14 +76,26 @@ export const Timeline = () => {
           </div>
         </div>
       </form>
-      {!chirps.length ? (
+      {!query.data ? (
         <div className="p-10 flex items-center justify-center text-2xl text-blue-500">
           <PendingIcon />
         </div>
-      ) : null}
-      {chirps.map((chirp) => (
-        <Chirp key={chirp.id} chirp={chirp} fullLink />
-      ))}
+      ) : (
+        <>
+          {query.data.messages.map((message) => (
+            <Chirp
+              key={message.id}
+              chirp={{
+                id: message.id,
+                date: DateTime.fromSeconds(message.timestamp),
+                from: message.from,
+                message: message.message,
+              }}
+              fullLink
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 };

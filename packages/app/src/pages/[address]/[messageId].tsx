@@ -1,66 +1,52 @@
 import { DateTime } from "luxon";
-import type { GetServerSideProps, NextPage } from "next";
+import type { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import { Chirp } from "../../Chirp";
-import { chirpCityContract } from "../../contracts";
+import { useMessageQuery } from "../../codegen/subgraph";
 import { firstParam } from "../../firstParam";
+import { PendingIcon } from "../../icons/PendingIcon";
 
-type Props = {
-  id: string;
-  date: number;
-  from: string;
-  message: string;
-};
+const ChirpPage: NextPage = () => {
+  const router = useRouter();
+  const address = firstParam(router.query.address);
+  const messageId = firstParam(router.query.messageId);
 
-export const getServerSideProps: GetServerSideProps<Props> = async (
-  context
-) => {
-  const address = firstParam(context.query.address);
-  const id = firstParam(context.query.messageId);
-
-  // TODO: 404 page instead?
-  if (!address || !id) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-
-  const [_prefix, _chainId, blockNumber, logIndex] = id.split(":");
-
-  const chirpFilter = chirpCityContract.filters.ChirpCityMessage();
-  const events = await chirpCityContract.queryFilter(
-    chirpFilter,
-    +blockNumber,
-    +blockNumber
+  const [query, refetchQuery] = useMessageQuery(
+    typeof window === "undefined" || !messageId
+      ? { pause: true }
+      : {
+          variables: { id: messageId },
+        }
   );
-  const chirp = events.find((event) => event.logIndex === +logIndex);
-  if (!chirp) {
-    return {
-      notFound: true,
-    };
+
+  if (!query.data) {
+    return (
+      <div className="flex flex-col flex-wrap items-center">
+        <div className="flex-shrink-0 w-full md:w-2/3 lg:w-1/2">
+          <div className="flex flex-col flex-wrap divide-y border">
+            <div className="p-10 flex items-center justify-center text-2xl text-blue-500">
+              <PendingIcon />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
-  const block = await chirp.getBlock();
 
-  // TODO: redirect if address does not match
+  const { message } = query.data;
+  if (!message) {
+    // TODO: redirect inside useEffect
+    return null;
+  }
 
-  return {
-    props: {
-      id,
-      date: block.timestamp,
-      from: chirp.args.from,
-      message: chirp.args.message,
-    },
-  };
-};
+  // TODO: redirect to correct address if needed
 
-const ChirpPage: NextPage<Props> = ({ id, date, from, message }) => {
   return (
     <>
       <Head>
+        {/* TODO: title */}
         <title>Chirp City</title>
       </Head>
 
@@ -69,11 +55,10 @@ const ChirpPage: NextPage<Props> = ({ id, date, from, message }) => {
           <div className="flex flex-col flex-wrap divide-y border">
             <Chirp
               chirp={{
-                id,
-                date: DateTime.fromSeconds(date),
-                from,
-                message,
-                url: `/TODO/chirps/${id}`,
+                id: message.id,
+                date: DateTime.fromSeconds(message.timestamp),
+                from: message.from,
+                message: message.message,
               }}
             />
           </div>

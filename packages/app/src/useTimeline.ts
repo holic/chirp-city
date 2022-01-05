@@ -44,10 +44,6 @@ export const useTimeline = () => {
         date: DateTime.fromSeconds(block.timestamp),
         from,
         message: event.args.message,
-        get url() {
-          const name = useENSStore.getState().addressToName[from];
-          return `/${name || from}/${id}`;
-        },
       });
     };
 

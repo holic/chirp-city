@@ -5,5 +5,4 @@ export type Chirp = {
   date: DateTime;
   from: string;
   message: string;
-  url: string;
 };

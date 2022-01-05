@@ -1,8 +1,9 @@
 type Message @entity {
   id: ID!
   timestamp: Int!
-  from: String!
+  from: Bytes!
   message: String!
+  mentions: [Bytes!]!
   parents: [Message!]!
   children: [Message!]! @derivedFrom(field: "parents")
 }

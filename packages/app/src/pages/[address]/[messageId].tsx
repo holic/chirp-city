@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     };
   }
 
-  const [_prefix, blockNumber, logIndex] = id.split(":");
+  const [_prefix, _chainId, blockNumber, logIndex] = id.split(":");
 
   const chirpFilter = chirpCityContract.filters.ChirpCityMessage();
   const events = await chirpCityContract.queryFilter(

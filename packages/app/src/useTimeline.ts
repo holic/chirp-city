@@ -36,7 +36,8 @@ export const useTimeline = () => {
   useEffect(() => {
     const addChirpEvent = async (event: ChirpCityMessageEvent) => {
       const block = await event.getBlock();
-      const id = `chirp:${block.number}:${event.logIndex}`;
+      const network = await chirpCityContract.provider.getNetwork();
+      const id = `chirp:${network.chainId}:${block.number}:${event.logIndex}`;
       const from = event.args.from;
       addChirp({
         id,

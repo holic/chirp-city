@@ -21,4 +21,4 @@ dataSources:
       eventHandlers:
         - event: ChirpCityMessage(indexed address,string)
           handler: handleChirpCityMessage
-      file: ./src/mapping.ts
+      file: ./src/mumbai.ts

@@ -4,5 +4,11 @@
       "address": "0x9c18B9B6a7E80EE6C9EfD92fD0A53F0bf30f0283",
       "blockNumber": 23378454
     }
+  },
+  "rinkeby": {
+    "ChirpCity": {
+      "address": "0x338E78ff0Cc99ebD0301C13D005564160FA736C8",
+      "blockNumber": 9936103
+    }
   }
 }

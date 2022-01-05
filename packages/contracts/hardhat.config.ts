@@ -32,6 +32,10 @@ export default {
       url: process.env.POLYGON_MUMBAI_URL,
       accounts: [process.env.POLYGON_MUMBAI_DEPLOYER_PRIVATE_KEY],
     },
+    rinkeby: {
+      url: process.env.ETHEREUM_RINKEBY_URL,
+      accounts: [process.env.ETHEREUM_RINKEBY_DEPLOYER_PRIVATE_KEY],
+    },
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,

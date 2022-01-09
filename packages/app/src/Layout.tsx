@@ -47,7 +47,7 @@ type Props = {
 
 export const Layout = ({ children }: Props) => {
   return (
-    <div className="flex flex-col flex-col-reverse sm:grid sm:grid-cols-layout">
+    <div className="min-h-screen flex flex-col flex-col-reverse justify-between sm:grid sm:grid-cols-layout">
       <div className="sticky sm:static bottom-0 inset-x-0 sm:flex sm:justify-end bg-white z-10 p2 sm:p-4">
         <nav>
           <ul className="flex sm:flex-col justify-evenly sm:min-w-[14rem] text-xl">

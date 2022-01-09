@@ -247,6 +247,21 @@ export type MessageQuery = {
     | undefined;
 };
 
+export type NotificationsQueryVariables = Exact<{
+  address: ReadonlyArray<Scalars["Bytes"]> | Scalars["Bytes"];
+}>;
+
+export type NotificationsQuery = {
+  readonly __typename?: "Query";
+  readonly messages: ReadonlyArray<{
+    readonly __typename?: "Message";
+    readonly id: string;
+    readonly timestamp: number;
+    readonly from: any;
+    readonly message: string;
+  }>;
+};
+
 export const ChirpMessageFragmentDoc = gql`
   fragment ChirpMessage on Message {
     id
@@ -283,4 +298,27 @@ export function useMessageQuery(
   options: Omit<Urql.UseQueryArgs<MessageQueryVariables>, "query"> = {}
 ) {
   return Urql.useQuery<MessageQuery>({ query: MessageDocument, ...options });
+}
+export const NotificationsDocument = gql`
+  query Notifications($address: [Bytes!]!) {
+    messages(
+      where: { mentions: $address }
+      first: 100
+      orderBy: timestamp
+      orderDirection: desc
+    ) {
+      id
+      ...ChirpMessage
+    }
+  }
+  ${ChirpMessageFragmentDoc}
+`;
+
+export function useNotificationsQuery(
+  options: Omit<Urql.UseQueryArgs<NotificationsQueryVariables>, "query"> = {}
+) {
+  return Urql.useQuery<NotificationsQuery>({
+    query: NotificationsDocument,
+    ...options,
+  });
 }

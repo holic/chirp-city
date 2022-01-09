@@ -52,7 +52,7 @@ export const Chirp = ({ message, fullLink }: Props) => {
         </div>
         <div
           className="whitespace-pre-wrap"
-          style={{ overflowWrap: "anywhere" }}
+          style={{ wordBreak: "break-word" }}
         >
           {message.message}
         </div>

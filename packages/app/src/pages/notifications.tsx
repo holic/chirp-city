@@ -44,7 +44,7 @@ const NotificationsPage: NextPage = () => {
       <Layout>
         <div className="flex flex-col flex-wrap divide-y sm:border">
           {!query.data ? (
-            <div className="p-10 flex items-center justify-center text-2xl text-blue-500">
+            <div className="p-10 flex items-center justify-center text-2xl text-green-500">
               <PendingIcon />
             </div>
           ) : (

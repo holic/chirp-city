@@ -22,14 +22,14 @@ const NavLink = ({ href, label, icon }: NavLinkProps) => {
       <a className="flex py-1 group">
         <span
           className={classNames(
-            "flex items-center gap-4 px-3 sm:pl-5 sm:pr-7 py-3 rounded-full group-hover:bg-gray-100",
-            isActive ? "font-bold" : null
+            "flex items-center gap-4 px-3 sm:pl-5 sm:pr-7 py-3 rounded-full group-hover:bg-lime-100",
+            isActive ? "font-semibold" : null
           )}
         >
           <span
             className={classNames(
               "text-3xl sm:text-2xl",
-              !isActive ? "text-blue-400 group-hover:text-blue-600" : null
+              !isActive ? "text-green-500 group-hover:text-green-700" : null
             )}
           >
             {icon}

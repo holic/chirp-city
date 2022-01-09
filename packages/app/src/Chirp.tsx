@@ -23,7 +23,7 @@ type Props = {
 };
 
 export const Chirp = ({ message, fullLink }: Props) => {
-  const { address } = useENS(message.from);
+  const { name, address } = useENS(message.from);
   return (
     <div
       className={classNames(
@@ -38,7 +38,7 @@ export const Chirp = ({ message, fullLink }: Props) => {
             <AccountName address={message.from} />
           </div>
           <div>·</div>
-          <Link href={`/${address}/${message.id}`}>
+          <Link href={`/${name || address}/${message.id}`}>
             <a
               className={classNames(
                 fullLink ? "before:absolute before:inset-0" : null

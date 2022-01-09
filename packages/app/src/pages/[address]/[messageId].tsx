@@ -32,22 +32,6 @@ const MessagePage: NextPage = () => {
         }
   );
 
-  if (!query.data) {
-    return (
-      <div className="flex flex-col flex-wrap divide-y sm:border">
-        <div className="p-10 flex items-center justify-center text-2xl text-blue-500">
-          <PendingIcon />
-        </div>
-      </div>
-    );
-  }
-
-  const { message } = query.data;
-  if (!message) {
-    // TODO: redirect inside useEffect
-    return null;
-  }
-
   // TODO: redirect to correct address if needed
 
   return (
@@ -59,7 +43,14 @@ const MessagePage: NextPage = () => {
 
       <Layout>
         <div className="flex flex-col flex-wrap divide-y border">
-          <Chirp message={message} />
+          {!query.data ? (
+            <div className="p-10 flex items-center justify-center text-2xl text-green-500">
+              <PendingIcon />
+            </div>
+          ) : query.data.message ? (
+            <Chirp message={query.data.message} />
+          ) : null}
+          {/* TODO: not found page/message? */}
         </div>
       </Layout>
     </>

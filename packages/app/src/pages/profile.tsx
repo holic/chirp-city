@@ -12,7 +12,7 @@ const ProfilePage: NextPage = () => {
       </Head>
 
       <Layout>
-        <div className="flex flex-col flex-wrap divide-y border">
+        <div className="flex flex-col flex-wrap divide-y sm:border">
           <div className="p-10 flex items-center justify-center text-2xl text-blue-500">
             <PendingIcon />
           </div>

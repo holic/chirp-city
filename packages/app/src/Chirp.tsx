@@ -27,7 +27,7 @@ export const Chirp = ({ message, fullLink }: Props) => {
   return (
     <div
       className={classNames(
-        "p-4 flex flex-wrap gap-4 relative",
+        "p-4 flex gap-4 relative",
         fullLink ? "hover:bg-gray-100" : null
       )}
     >
@@ -50,8 +50,12 @@ export const Chirp = ({ message, fullLink }: Props) => {
             </a>
           </Link>
         </div>
-        {/* TODO: revisit word breaks */}
-        <div className="whitespace-pre-wrap break-all">{message.message}</div>
+        <div
+          className="whitespace-pre-wrap"
+          style={{ overflowWrap: "anywhere" }}
+        >
+          {message.message}
+        </div>
       </div>
     </div>
   );

@@ -2,11 +2,21 @@ import { DateTime } from "luxon";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { gql } from "urql";
 
-import { Chirp } from "../../Chirp";
+import { Chirp, ChirpMessageFragment } from "../../Chirp";
 import { useMessageQuery } from "../../codegen/subgraph";
 import { firstParam } from "../../firstParam";
 import { PendingIcon } from "../../icons/PendingIcon";
+
+gql`
+  query Message($id: ID!) {
+    message(id: $id) {
+      ...ChirpMessage
+    }
+    ${ChirpMessageFragment}
+  }
+`;
 
 const ChirpPage: NextPage = () => {
   const router = useRouter();
@@ -53,14 +63,7 @@ const ChirpPage: NextPage = () => {
       <div className="flex flex-col flex-wrap items-center">
         <div className="flex-shrink-0 w-full md:w-2/3 lg:w-1/2">
           <div className="flex flex-col flex-wrap divide-y border">
-            <Chirp
-              chirp={{
-                id: message.id,
-                date: DateTime.fromSeconds(message.timestamp),
-                from: message.from,
-                message: message.message,
-              }}
-            />
+            <Chirp message={message} />
           </div>
         </div>
       </div>

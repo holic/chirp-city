@@ -8,6 +8,7 @@ generates:
       - '@graphql-codegen/typescript-urql'
     config:
       gqlImport: urql#gql
+      immutableTypes: true
 hooks:
   afterAllFileWrite:
     - eslint --fix

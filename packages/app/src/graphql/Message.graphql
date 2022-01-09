@@ -1,8 +1,0 @@
-query Message($id: ID!) {
-  message(id: $id) {
-    id
-    timestamp
-    from
-    message
-  }
-}

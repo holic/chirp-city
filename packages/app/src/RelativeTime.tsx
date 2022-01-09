@@ -2,10 +2,11 @@ import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 
 type Props = {
-  date: DateTime;
+  timestamp: number;
 };
 
-export const RelativeTime = ({ date }: Props) => {
+export const RelativeTime = ({ timestamp }: Props) => {
+  const date = DateTime.fromSeconds(timestamp);
   const [relativeTime, setRelativeTime] = useState(date.toRelative());
 
   useEffect(() => {

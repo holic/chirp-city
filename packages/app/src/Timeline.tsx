@@ -1,15 +1,25 @@
-import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
+import { gql } from "urql";
 
 import { AccountAvatar } from "./AccountAvatar";
 import { Avatar } from "./Avatar";
 import { Button } from "./Button";
-import { Chirp } from "./Chirp";
+import { Chirp, ChirpMessageFragment } from "./Chirp";
 import { useTimelineQuery } from "./codegen/subgraph";
 import { chirpCityContract } from "./contracts";
 import { PendingIcon } from "./icons/PendingIcon";
 import { useTransaction, WalletState } from "./useTransaction";
 import { useWallet } from "./useWallet";
+
+gql`
+  query Timeline {
+    messages(first: 100, orderBy: timestamp, orderDirection: desc) {
+      id
+      ...ChirpMessage
+    }
+    ${ChirpMessageFragment}
+  }
+`;
 
 export const Timeline = () => {
   const [query, refetchQuery] = useTimelineQuery({
@@ -83,16 +93,7 @@ export const Timeline = () => {
       ) : (
         <>
           {query.data.messages.map((message) => (
-            <Chirp
-              key={message.id}
-              chirp={{
-                id: message.id,
-                date: DateTime.fromSeconds(message.timestamp),
-                from: message.from,
-                message: message.message,
-              }}
-              fullLink
-            />
+            <Chirp key={message.id} message={message} fullLink />
           ))}
         </>
       )}

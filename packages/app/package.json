@@ -2,7 +2,7 @@
   "name": "@chirp-city/app",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev & graphql-codegen --watch",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

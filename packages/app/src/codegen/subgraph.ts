@@ -26,20 +26,20 @@ export type Scalars = {
 };
 
 export type Block_Height = {
-  hash?: InputMaybe<Scalars["Bytes"]>;
-  number?: InputMaybe<Scalars["Int"]>;
-  number_gte?: InputMaybe<Scalars["Int"]>;
+  readonly hash?: InputMaybe<Scalars["Bytes"]>;
+  readonly number?: InputMaybe<Scalars["Int"]>;
+  readonly number_gte?: InputMaybe<Scalars["Int"]>;
 };
 
 export type Message = {
-  __typename?: "Message";
-  children: Array<Message>;
-  from: Scalars["Bytes"];
-  id: Scalars["ID"];
-  mentions: Array<Scalars["Bytes"]>;
-  message: Scalars["String"];
-  parents: Array<Message>;
-  timestamp: Scalars["Int"];
+  readonly __typename?: "Message";
+  readonly children: ReadonlyArray<Message>;
+  readonly from: Scalars["Bytes"];
+  readonly id: Scalars["ID"];
+  readonly mentions: ReadonlyArray<Scalars["Bytes"]>;
+  readonly message: Scalars["String"];
+  readonly parents: ReadonlyArray<Message>;
+  readonly timestamp: Scalars["Int"];
 };
 
 export type MessageChildrenArgs = {
@@ -59,50 +59,50 @@ export type MessageParentsArgs = {
 };
 
 export type Message_Filter = {
-  from?: InputMaybe<Scalars["Bytes"]>;
-  from_contains?: InputMaybe<Scalars["Bytes"]>;
-  from_in?: InputMaybe<Array<Scalars["Bytes"]>>;
-  from_not?: InputMaybe<Scalars["Bytes"]>;
-  from_not_contains?: InputMaybe<Scalars["Bytes"]>;
-  from_not_in?: InputMaybe<Array<Scalars["Bytes"]>>;
-  id?: InputMaybe<Scalars["ID"]>;
-  id_gt?: InputMaybe<Scalars["ID"]>;
-  id_gte?: InputMaybe<Scalars["ID"]>;
-  id_in?: InputMaybe<Array<Scalars["ID"]>>;
-  id_lt?: InputMaybe<Scalars["ID"]>;
-  id_lte?: InputMaybe<Scalars["ID"]>;
-  id_not?: InputMaybe<Scalars["ID"]>;
-  id_not_in?: InputMaybe<Array<Scalars["ID"]>>;
-  mentions?: InputMaybe<Array<Scalars["Bytes"]>>;
-  mentions_contains?: InputMaybe<Array<Scalars["Bytes"]>>;
-  mentions_not?: InputMaybe<Array<Scalars["Bytes"]>>;
-  mentions_not_contains?: InputMaybe<Array<Scalars["Bytes"]>>;
-  message?: InputMaybe<Scalars["String"]>;
-  message_contains?: InputMaybe<Scalars["String"]>;
-  message_ends_with?: InputMaybe<Scalars["String"]>;
-  message_gt?: InputMaybe<Scalars["String"]>;
-  message_gte?: InputMaybe<Scalars["String"]>;
-  message_in?: InputMaybe<Array<Scalars["String"]>>;
-  message_lt?: InputMaybe<Scalars["String"]>;
-  message_lte?: InputMaybe<Scalars["String"]>;
-  message_not?: InputMaybe<Scalars["String"]>;
-  message_not_contains?: InputMaybe<Scalars["String"]>;
-  message_not_ends_with?: InputMaybe<Scalars["String"]>;
-  message_not_in?: InputMaybe<Array<Scalars["String"]>>;
-  message_not_starts_with?: InputMaybe<Scalars["String"]>;
-  message_starts_with?: InputMaybe<Scalars["String"]>;
-  parents?: InputMaybe<Array<Scalars["String"]>>;
-  parents_contains?: InputMaybe<Array<Scalars["String"]>>;
-  parents_not?: InputMaybe<Array<Scalars["String"]>>;
-  parents_not_contains?: InputMaybe<Array<Scalars["String"]>>;
-  timestamp?: InputMaybe<Scalars["Int"]>;
-  timestamp_gt?: InputMaybe<Scalars["Int"]>;
-  timestamp_gte?: InputMaybe<Scalars["Int"]>;
-  timestamp_in?: InputMaybe<Array<Scalars["Int"]>>;
-  timestamp_lt?: InputMaybe<Scalars["Int"]>;
-  timestamp_lte?: InputMaybe<Scalars["Int"]>;
-  timestamp_not?: InputMaybe<Scalars["Int"]>;
-  timestamp_not_in?: InputMaybe<Array<Scalars["Int"]>>;
+  readonly from?: InputMaybe<Scalars["Bytes"]>;
+  readonly from_contains?: InputMaybe<Scalars["Bytes"]>;
+  readonly from_in?: InputMaybe<ReadonlyArray<Scalars["Bytes"]>>;
+  readonly from_not?: InputMaybe<Scalars["Bytes"]>;
+  readonly from_not_contains?: InputMaybe<Scalars["Bytes"]>;
+  readonly from_not_in?: InputMaybe<ReadonlyArray<Scalars["Bytes"]>>;
+  readonly id?: InputMaybe<Scalars["ID"]>;
+  readonly id_gt?: InputMaybe<Scalars["ID"]>;
+  readonly id_gte?: InputMaybe<Scalars["ID"]>;
+  readonly id_in?: InputMaybe<ReadonlyArray<Scalars["ID"]>>;
+  readonly id_lt?: InputMaybe<Scalars["ID"]>;
+  readonly id_lte?: InputMaybe<Scalars["ID"]>;
+  readonly id_not?: InputMaybe<Scalars["ID"]>;
+  readonly id_not_in?: InputMaybe<ReadonlyArray<Scalars["ID"]>>;
+  readonly mentions?: InputMaybe<ReadonlyArray<Scalars["Bytes"]>>;
+  readonly mentions_contains?: InputMaybe<ReadonlyArray<Scalars["Bytes"]>>;
+  readonly mentions_not?: InputMaybe<ReadonlyArray<Scalars["Bytes"]>>;
+  readonly mentions_not_contains?: InputMaybe<ReadonlyArray<Scalars["Bytes"]>>;
+  readonly message?: InputMaybe<Scalars["String"]>;
+  readonly message_contains?: InputMaybe<Scalars["String"]>;
+  readonly message_ends_with?: InputMaybe<Scalars["String"]>;
+  readonly message_gt?: InputMaybe<Scalars["String"]>;
+  readonly message_gte?: InputMaybe<Scalars["String"]>;
+  readonly message_in?: InputMaybe<ReadonlyArray<Scalars["String"]>>;
+  readonly message_lt?: InputMaybe<Scalars["String"]>;
+  readonly message_lte?: InputMaybe<Scalars["String"]>;
+  readonly message_not?: InputMaybe<Scalars["String"]>;
+  readonly message_not_contains?: InputMaybe<Scalars["String"]>;
+  readonly message_not_ends_with?: InputMaybe<Scalars["String"]>;
+  readonly message_not_in?: InputMaybe<ReadonlyArray<Scalars["String"]>>;
+  readonly message_not_starts_with?: InputMaybe<Scalars["String"]>;
+  readonly message_starts_with?: InputMaybe<Scalars["String"]>;
+  readonly parents?: InputMaybe<ReadonlyArray<Scalars["String"]>>;
+  readonly parents_contains?: InputMaybe<ReadonlyArray<Scalars["String"]>>;
+  readonly parents_not?: InputMaybe<ReadonlyArray<Scalars["String"]>>;
+  readonly parents_not_contains?: InputMaybe<ReadonlyArray<Scalars["String"]>>;
+  readonly timestamp?: InputMaybe<Scalars["Int"]>;
+  readonly timestamp_gt?: InputMaybe<Scalars["Int"]>;
+  readonly timestamp_gte?: InputMaybe<Scalars["Int"]>;
+  readonly timestamp_in?: InputMaybe<ReadonlyArray<Scalars["Int"]>>;
+  readonly timestamp_lt?: InputMaybe<Scalars["Int"]>;
+  readonly timestamp_lte?: InputMaybe<Scalars["Int"]>;
+  readonly timestamp_not?: InputMaybe<Scalars["Int"]>;
+  readonly timestamp_not_in?: InputMaybe<ReadonlyArray<Scalars["Int"]>>;
 };
 
 export enum Message_OrderBy {
@@ -121,11 +121,11 @@ export enum OrderDirection {
 }
 
 export type Query = {
-  __typename?: "Query";
+  readonly __typename?: "Query";
   /** Access to subgraph metadata */
-  _meta?: Maybe<_Meta_>;
-  message?: Maybe<Message>;
-  messages: Array<Message>;
+  readonly _meta?: Maybe<_Meta_>;
+  readonly message?: Maybe<Message>;
+  readonly messages: ReadonlyArray<Message>;
 };
 
 export type Query_MetaArgs = {
@@ -149,11 +149,11 @@ export type QueryMessagesArgs = {
 };
 
 export type Subscription = {
-  __typename?: "Subscription";
+  readonly __typename?: "Subscription";
   /** Access to subgraph metadata */
-  _meta?: Maybe<_Meta_>;
-  message?: Maybe<Message>;
-  messages: Array<Message>;
+  readonly _meta?: Maybe<_Meta_>;
+  readonly message?: Maybe<Message>;
+  readonly messages: ReadonlyArray<Message>;
 };
 
 export type Subscription_MetaArgs = {
@@ -177,16 +177,16 @@ export type SubscriptionMessagesArgs = {
 };
 
 export type _Block_ = {
-  __typename?: "_Block_";
+  readonly __typename?: "_Block_";
   /** The hash of the block */
-  hash?: Maybe<Scalars["Bytes"]>;
+  readonly hash?: Maybe<Scalars["Bytes"]>;
   /** The block number */
-  number: Scalars["Int"];
+  readonly number: Scalars["Int"];
 };
 
 /** The type for the top-level _meta field */
 export type _Meta_ = {
-  __typename?: "_Meta_";
+  readonly __typename?: "_Meta_";
   /**
    * Information about a specific subgraph block. The hash of the block
    * will be null if the _meta field has a block constraint that asks for
@@ -194,11 +194,11 @@ export type _Meta_ = {
    * and therefore asks for the latest  block
    *
    */
-  block: _Block_;
+  readonly block: _Block_;
   /** The deployment ID */
-  deployment: Scalars["String"];
+  readonly deployment: Scalars["String"];
   /** If `true`, the subgraph encountered indexing errors at some past block */
-  hasIndexingErrors: Scalars["Boolean"];
+  readonly hasIndexingErrors: Scalars["Boolean"];
 };
 
 export enum _SubgraphErrorPolicy_ {
@@ -208,66 +208,79 @@ export enum _SubgraphErrorPolicy_ {
   Deny = "deny",
 }
 
-export type MessageQueryVariables = Exact<{
-  id: Scalars["ID"];
-}>;
-
-export type MessageQuery = {
-  __typename?: "Query";
-  message?:
-    | {
-        __typename?: "Message";
-        id: string;
-        timestamp: number;
-        from: any;
-        message: string;
-      }
-    | null
-    | undefined;
+export type ChirpMessageFragment = {
+  readonly __typename?: "Message";
+  readonly id: string;
+  readonly timestamp: number;
+  readonly from: any;
+  readonly message: string;
 };
 
 export type TimelineQueryVariables = Exact<{ [key: string]: never }>;
 
 export type TimelineQuery = {
-  __typename?: "Query";
-  messages: Array<{
-    __typename?: "Message";
-    id: string;
-    timestamp: number;
-    from: any;
-    message: string;
+  readonly __typename?: "Query";
+  readonly messages: ReadonlyArray<{
+    readonly __typename?: "Message";
+    readonly id: string;
+    readonly timestamp: number;
+    readonly from: any;
+    readonly message: string;
   }>;
 };
 
-export const MessageDocument = gql`
-  query Message($id: ID!) {
-    message(id: $id) {
-      id
-      timestamp
-      from
-      message
-    }
+export type MessageQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type MessageQuery = {
+  readonly __typename?: "Query";
+  readonly message?:
+    | {
+        readonly __typename?: "Message";
+        readonly id: string;
+        readonly timestamp: number;
+        readonly from: any;
+        readonly message: string;
+      }
+    | null
+    | undefined;
+};
+
+export const ChirpMessageFragmentDoc = gql`
+  fragment ChirpMessage on Message {
+    id
+    timestamp
+    from
+    message
   }
 `;
-
-export function useMessageQuery(
-  options: Omit<Urql.UseQueryArgs<MessageQueryVariables>, "query"> = {}
-) {
-  return Urql.useQuery<MessageQuery>({ query: MessageDocument, ...options });
-}
 export const TimelineDocument = gql`
   query Timeline {
     messages(first: 100, orderBy: timestamp, orderDirection: desc) {
       id
-      timestamp
-      from
-      message
+      ...ChirpMessage
     }
   }
+  ${ChirpMessageFragmentDoc}
 `;
 
 export function useTimelineQuery(
   options: Omit<Urql.UseQueryArgs<TimelineQueryVariables>, "query"> = {}
 ) {
   return Urql.useQuery<TimelineQuery>({ query: TimelineDocument, ...options });
+}
+export const MessageDocument = gql`
+  query Message($id: ID!) {
+    message(id: $id) {
+      ...ChirpMessage
+    }
+  }
+  ${ChirpMessageFragmentDoc}
+`;
+
+export function useMessageQuery(
+  options: Omit<Urql.UseQueryArgs<MessageQueryVariables>, "query"> = {}
+) {
+  return Urql.useQuery<MessageQuery>({ query: MessageDocument, ...options });
 }

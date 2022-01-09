@@ -5,8 +5,8 @@ type Props = {
   address: string;
 };
 
-export const AccountAvatar = ({ address }: Props) => {
-  const { name, avatar } = useENS(address);
+export const AccountAvatar = ({ address: inputAddress }: Props) => {
+  const { name, address, avatar } = useENS(inputAddress);
 
   return (
     <Avatar

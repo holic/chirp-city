@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const Chirp = ({ chirp, fullLink }: Props) => {
-  const { name } = useENS(chirp.from);
+  const { address } = useENS(chirp.from);
   return (
     <div
       className={classNames(
@@ -28,7 +28,7 @@ export const Chirp = ({ chirp, fullLink }: Props) => {
             <AccountName address={chirp.from} />
           </div>
           <div>·</div>
-          <Link href={`/${name}/${chirp.id}`}>
+          <Link href={`/${address}/${chirp.id}`}>
             <a
               className={classNames(
                 fullLink ? "before:absolute before:inset-0" : null

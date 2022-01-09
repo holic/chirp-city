@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import createStore from "zustand";
 import { persist } from "zustand/middleware";
 

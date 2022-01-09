@@ -47,7 +47,7 @@ export const Timeline = () => {
   const pending = walletState !== WalletState.idle;
 
   return (
-    <div className="flex flex-col flex-wrap divide-y border">
+    <div className="flex flex-col divide-y border">
       <form
         onSubmit={async (event) => {
           event.preventDefault();

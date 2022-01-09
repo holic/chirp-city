@@ -64,10 +64,12 @@ export const useWallet: UseWallet = () => {
 
       // Set up event listeners to handle state changes
       web3ModalProvider.on("accountsChanged", (accounts: string[]) => {
+        console.log("walletProvider:accountsChanged", accounts);
         useStore.setState({ account: formatAddress(accounts[0]) });
       });
 
-      web3ModalProvider.on("chainChanged", async (_chainId: string) => {
+      web3ModalProvider.on("chainChanged", async (chainId: string) => {
+        console.log("walletProvider:chainChanged", chainId);
         const network = await getNetwork();
         useStore.setState({ network });
       });

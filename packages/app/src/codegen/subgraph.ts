@@ -262,6 +262,21 @@ export type NotificationsQuery = {
   }>;
 };
 
+export type ProfileQueryVariables = Exact<{
+  address: Scalars["Bytes"];
+}>;
+
+export type ProfileQuery = {
+  readonly __typename?: "Query";
+  readonly messages: ReadonlyArray<{
+    readonly __typename?: "Message";
+    readonly id: string;
+    readonly timestamp: number;
+    readonly from: any;
+    readonly message: string;
+  }>;
+};
+
 export const ChirpMessageFragmentDoc = gql`
   fragment ChirpMessage on Message {
     id
@@ -321,4 +336,24 @@ export function useNotificationsQuery(
     query: NotificationsDocument,
     ...options,
   });
+}
+export const ProfileDocument = gql`
+  query Profile($address: Bytes!) {
+    messages(
+      where: { from: $address }
+      first: 100
+      orderBy: timestamp
+      orderDirection: desc
+    ) {
+      id
+      ...ChirpMessage
+    }
+  }
+  ${ChirpMessageFragmentDoc}
+`;
+
+export function useProfileQuery(
+  options: Omit<Urql.UseQueryArgs<ProfileQueryVariables>, "query"> = {}
+) {
+  return Urql.useQuery<ProfileQuery>({ query: ProfileDocument, ...options });
 }

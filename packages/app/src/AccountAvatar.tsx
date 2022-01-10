@@ -3,9 +3,13 @@ import { useENS } from "./useENS";
 
 type Props = {
   address: string;
+  size?: React.ComponentProps<typeof Avatar>["size"];
 };
 
-export const AccountAvatar = ({ address: inputAddress }: Props) => {
+export const AccountAvatar = ({
+  address: inputAddress,
+  ...otherProps
+}: Props) => {
   const { name, address, avatar } = useENS(inputAddress);
 
   return (
@@ -17,6 +21,7 @@ export const AccountAvatar = ({ address: inputAddress }: Props) => {
         )}.svg`
       }
       alt={`avatar for ${name || address}`}
+      {...otherProps}
     />
   );
 };

@@ -248,7 +248,8 @@ export type MessageQuery = {
 };
 
 export type NotificationsQueryVariables = Exact<{
-  address: ReadonlyArray<Scalars["Bytes"]> | Scalars["Bytes"];
+  mentions: ReadonlyArray<Scalars["Bytes"]> | Scalars["Bytes"];
+  notFrom: Scalars["Bytes"];
 }>;
 
 export type NotificationsQuery = {
@@ -315,9 +316,9 @@ export function useMessageQuery(
   return Urql.useQuery<MessageQuery>({ query: MessageDocument, ...options });
 }
 export const NotificationsDocument = gql`
-  query Notifications($address: [Bytes!]!) {
+  query Notifications($mentions: [Bytes!]!, $notFrom: Bytes!) {
     messages(
-      where: { mentions: $address }
+      where: { mentions: $mentions, from_not: $notFrom }
       first: 100
       orderBy: timestamp
       orderDirection: desc

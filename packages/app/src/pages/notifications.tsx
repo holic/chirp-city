@@ -9,8 +9,8 @@ import { PendingIcon } from "../icons/PendingIcon";
 import { Layout } from "../Layout";
 
 gql`
-  query Notifications($address: [Bytes!]!) {
-    messages(where: {mentions: $address}, first: 100, orderBy: timestamp, orderDirection: desc) {
+  query Notifications($mentions: [Bytes!]!, $notFrom: Bytes!) {
+    messages(where: {mentions: $mentions, from_not: $notFrom}, first: 100, orderBy: timestamp, orderDirection: desc) {
       id
       ...ChirpMessage
     }
@@ -21,7 +21,8 @@ gql`
 const NotificationsPage: NextPage = () => {
   const [query, refetchQuery] = useNotificationsQuery({
     variables: {
-      address: ["0xC9C022FCFebE730710aE93CA9247c5Ec9d9236d0".toLowerCase()],
+      mentions: ["0xC9C022FCFebE730710aE93CA9247c5Ec9d9236d0".toLowerCase()],
+      notFrom: "0xC9C022FCFebE730710aE93CA9247c5Ec9d9236d0".toLowerCase(),
     },
     // Prevent executing query server side for now
     // TODO: populate this server side?
@@ -49,6 +50,12 @@ const NotificationsPage: NextPage = () => {
             </div>
           ) : (
             <>
+              {!query.data.messages.length ? (
+                <div className="p-10 text-gray-500">
+                  You have no notifications. If someone chirps at you or replies
+                  to your chirp, you&apos;ll see their message here.
+                </div>
+              ) : null}
               {query.data.messages.map((message) => (
                 <Chirp key={message.id} message={message} fullLink />
               ))}

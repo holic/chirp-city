@@ -2,6 +2,7 @@ import { Network, Web3Provider } from "@ethersproject/providers";
 import { useCallback } from "react";
 import Web3Modal, { ICoreOptions } from "web3modal";
 import create from "zustand";
+import { persist } from "zustand/middleware";
 
 import { formatAddress } from "./formatAddress";
 
@@ -15,9 +16,19 @@ type State = {
   web3Modal: Web3Modal;
 };
 
-const useStore = create<Partial<State>>((_set) => ({
-  web3Modal: typeof window !== "undefined" ? new Web3Modal() : undefined,
-}));
+const useStore = create<Partial<State>>(
+  persist(
+    (): Partial<State> => ({
+      web3Modal: typeof window !== "undefined" ? new Web3Modal() : undefined,
+    }),
+    {
+      name: "gimmix-wallet",
+      partialize: ({ account }) => ({
+        account,
+      }),
+    }
+  )
+);
 
 type Account = string;
 type ConnectWallet = (opts?: Partial<ICoreOptions>) => Promise<State>;

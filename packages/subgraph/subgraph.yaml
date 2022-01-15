@@ -6,19 +6,19 @@ dataSources:
     name: ChirpCity
     network: mumbai
     source:
-      address: "0x9c18B9B6a7E80EE6C9EfD92fD0A53F0bf30f0283"
+      address: "0x22CE429A3ea28BA8Be8b706cC4A560fDE7f74588"
       abi: ChirpCity
-      startBlock: 23378454
+      startBlock: 23905152
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - ChirpCityMessage
+        - PublicMessage
       abis:
         - name: ChirpCity
           file: ./abis/ChirpCity.json
       eventHandlers:
-        - event: ChirpCityMessage(indexed address,string)
-          handler: handleChirpCityMessage
+        - event: PublicMessage(indexed address,string)
+          handler: handlePublicMessage
       file: ./src/mumbai.ts

@@ -15,16 +15,7 @@
         "type": "string"
       }
     ],
-    "name": "ChirpCityMessage",
+    "name": "PublicMessage",
     "type": "event"
-  },
-  {
-    "inputs": [
-      { "internalType": "string", "name": "message", "type": "string" }
-    ],
-    "name": "chirp",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   }
 ]

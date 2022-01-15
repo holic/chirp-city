@@ -11,37 +11,39 @@ const exists = (path: string) =>
     .catch(() => false);
 
 const deployContract = async (factory: ContractFactory) => {
-  const addressesPath = `${__dirname}/../deploys.json`;
-  const addressBook = (await exists(addressesPath))
-    ? JSON.parse((await fs.readFile(addressesPath)).toString())
+  const deploysPath = `${__dirname}/../deploys.json`;
+  const deploys = (await exists(deploysPath))
+    ? JSON.parse((await fs.readFile(deploysPath)).toString())
     : {};
 
-  const addresses = addressBook[network.name] || {};
+  const deployedContracts = deploys[network.name] || {};
   const contractName = factory.constructor.name.replace(/__factory$/, "");
 
-  if (addresses[contractName] && !process.env.REDEPLOY_CONTRACTS) {
+  if (deployedContracts[contractName] && !process.env.REDEPLOY_CONTRACTS) {
     throw new Error(
-      `Contract ${contractName} has already been deployed to ${addresses[contractName]}. Use \`REDEPLOY_CONTRACTS=1\` to deploy a new contract and override the stored address.`
+      `Contract ${contractName} has already been deployed to ${deployedContracts[contractName].address}. Use \`REDEPLOY_CONTRACTS=1\` to deploy a new contract and override the stored address.`
     );
   }
 
   const contract = await factory.deploy();
-  console.log(contractName, "deployed at", contract.address);
-  console.log("Waiting for confirmation…");
-  await contract.deployed();
-
-  console.log("Waiting for more confirmations before verify…");
-  const tx = await contract.deployTransaction.wait(10);
+  // For some reason, `contract.address` is returning a different address
+  // than the one deployed. Might be a TypeChain issue?
+  //
+  // Instead, grab `contractAddress` from the deploy transaction receipt.
+  const tx = await contract.deployTransaction.wait();
+  console.log(
+    `${contractName} deployed at ${tx.contractAddress} (block #${tx.blockNumber})`
+  );
 
   await fs.writeFile(
-    addressesPath,
+    deploysPath,
     JSON.stringify(
       {
-        ...addressBook,
+        ...deploys,
         [network.name]: {
-          ...addresses,
+          ...deployedContracts,
           [contractName]: {
-            address: contract.address,
+            address: tx.contractAddress,
             blockNumber: tx.blockNumber,
           },
         },
@@ -51,9 +53,12 @@ const deployContract = async (factory: ContractFactory) => {
     )
   );
 
+  console.log("Waiting for 10 confirmations before verify…");
+  await contract.deployTransaction.wait(10);
+
   console.log("Verifying contract…");
   await hre.run("verify:verify", {
-    address: contract.address,
+    address: tx.contractAddress,
     constructorArguments: [],
   });
 };

@@ -1,7 +1,7 @@
 import { Bytes } from "@graphprotocol/graph-ts";
 import { Match, RegExp } from "assemblyscript-regex";
 
-import { ChirpCityMessage } from "../generated/ChirpCity/ChirpCity";
+import { PublicMessage } from "../generated/ChirpCity/ChirpCity";
 import { Message } from "../generated/schema";
 
 // I couldn't figure out if there was a way to get this programmatically
@@ -11,7 +11,7 @@ import { Message } from "../generated/schema";
 // Maybe a mapping from dataSource.network()?
 const chainId = 80001;
 
-export function handleChirpCityMessage(event: ChirpCityMessage): void {
+export function handlePublicMessage(event: PublicMessage): void {
   const id = `chirp:${chainId}:${event.block.number}:${event.logIndex}`;
 
   const parents: string[] = [];

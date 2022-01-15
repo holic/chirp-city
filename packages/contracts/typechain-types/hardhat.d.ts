@@ -13,15 +13,51 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
+      name: "BaseRelayRecipient",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BaseRelayRecipient__factory>;
+    getContractFactory(
+      name: "IRelayRecipient",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IRelayRecipient__factory>;
+    getContractFactory(
+      name: "Ownable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Ownable__factory>;
+    getContractFactory(
       name: "ChirpCity",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ChirpCity__factory>;
+    getContractFactory(
+      name: "PublicChannel",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PublicChannel__factory>;
 
+    getContractAt(
+      name: "BaseRelayRecipient",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BaseRelayRecipient>;
+    getContractAt(
+      name: "IRelayRecipient",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IRelayRecipient>;
+    getContractAt(
+      name: "Ownable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Ownable>;
     getContractAt(
       name: "ChirpCity",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ChirpCity>;
+    getContractAt(
+      name: "PublicChannel",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PublicChannel>;
 
     // default types
     getContractFactory(

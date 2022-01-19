@@ -3,13 +3,9 @@ import { Match, RegExp } from "assemblyscript-regex";
 
 import { PublicMessage } from "../generated/ChirpCity/ChirpCity";
 import { Message } from "../generated/schema";
+import { getChainId } from "./chainIds";
 
-// I couldn't figure out if there was a way to get this programmatically
-// so I'm hardcoding this here for now. We'll need to change this with
-// each chain indexer.
-//
-// Maybe a mapping from dataSource.network()?
-const chainId = 80001;
+const chainId = getChainId();
 
 export function handlePublicMessage(event: PublicMessage): void {
   const id = `chirp:${chainId}:${event.block.number}:${event.logIndex}`;

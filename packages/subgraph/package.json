@@ -3,10 +3,8 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ holic/chirp-city",
-    "create-local": "graph create --node http://localhost:8020/ holic/chirp-city",
-    "remove-local": "graph remove --node http://localhost:8020/ holic/chirp-city",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 holic/chirp-city"
+    "deploy:matic": "graph deploy --node https://api.thegraph.com/deploy/ holic/chirp-city subgraph-matic.yaml",
+    "deploy:mumbai": "graph deploy --node https://api.thegraph.com/deploy/ holic/chirp-city-testnet subgraph-mumbai.yaml"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.25.1",

@@ -21,4 +21,4 @@ dataSources:
       eventHandlers:
         - event: PublicMessage(indexed address,string)
           handler: handlePublicMessage
-      file: ./src/mumbai.ts
+      file: ./src/mapping.ts

@@ -4,22 +4,14 @@ import createDebug from "debug";
 import { useCallback } from "react";
 import createStore from "zustand";
 
+import { chainConfig } from "./chainConfig";
 import { useWallet } from "./useWallet";
 
 const debug = createDebug("app:useTransaction");
 
-const chainId = 80001;
-const chain = {
-  chainId: `0x${chainId.toString(16)}`,
-  chainName: "Polygon Testnet",
-  nativeCurrency: {
-    name: "MATIC",
-    symbol: "MATIC",
-    decimals: 18,
-  },
-  rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
-  blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-};
+const [chainId, chain] = chainConfig(
+  process.env.NODE_ENV === "production" ? "matic" : "mumbai"
+);
 
 export enum WalletState {
   idle = "idle",

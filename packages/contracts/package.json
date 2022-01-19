@@ -8,7 +8,8 @@
     "clean": "hardhat clean",
     "deploy:local": "hardhat clean && hardhat run scripts/deploy.ts --network localhost",
     "deploy:mumbai": "hardhat clean && hardhat run scripts/deploy.ts --network mumbai",
-    "deploy:rinkeby": "hardhat clean && hardhat run scripts/deploy.ts --network rinkeby"
+    "deploy:rinkeby": "hardhat clean && hardhat run scripts/deploy.ts --network rinkeby",
+    "deploy:matic": "hardhat clean && hardhat run scripts/deploy.ts --network matic"
   },
   "dependencies": {
     "@opengsn/contracts": "^2.2.5",

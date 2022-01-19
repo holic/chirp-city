@@ -36,6 +36,10 @@ export default {
       url: process.env.ETHEREUM_RINKEBY_URL,
       accounts: [process.env.ETHEREUM_RINKEBY_DEPLOYER_PRIVATE_KEY],
     },
+    matic: {
+      url: process.env.POLYGON_MAINNET_URL,
+      accounts: [process.env.POLYGON_MAINNET_DEPLOYER_PRIVATE_KEY],
+    },
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,

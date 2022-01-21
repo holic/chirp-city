@@ -1,14 +1,18 @@
-import { Link } from "remix";
+import type { MetaFunction } from "remix";
 
-export default function Index() {
+import { Layout } from "../Layout";
+import { Timeline } from "../Timeline";
+
+export const meta: MetaFunction = () => ({
+  title: "Chirp City",
+});
+
+const HomePage = () => {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <Link to="/posts">Posts</Link>
-        </li>
-      </ul>
-    </div>
+    <Layout>
+      <Timeline />
+    </Layout>
   );
-}
+};
+
+export default HomePage;

@@ -4,22 +4,28 @@
   "description": "",
   "license": "",
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev",
-    "postinstall": "remix setup node"
+    "postinstall": "remix setup node",
+    "css": "tailwindcss -o ./app/tailwind.css",
+    "build": "npm run css -- --minify && remix build",
+    "dev": "concurrently -n css,remix \"npm run css -- --watch\" \"remix dev\""
   },
   "dependencies": {
     "@remix-run/react": "^1.1.3",
+    "@remix-run/serve": "^1.1.3",
+    "@remix-run/vercel": "^1.1.3",
+    "@vercel/node": "^1.12.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "remix": "^1.1.3",
-    "@remix-run/serve": "^1.1.3",
-    "@remix-run/vercel": "^1.1.3"
+    "remix": "^1.1.3"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.1.3",
     "@types/react": "^17.0.24",
-    "@types/react-dom": "^17.0.9"
+    "@types/react-dom": "^17.0.9",
+    "autoprefixer": "^10.4.0",
+    "concurrently": "^7.0.0",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.5"
   },
   "engines": {
     "node": ">=14"

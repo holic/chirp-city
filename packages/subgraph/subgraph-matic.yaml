@@ -6,10 +6,9 @@ dataSources:
     name: ChirpCity
     network: matic
     source:
-      # TODO
-      address: "0x22CE429A3ea28BA8Be8b706cC4A560fDE7f74588"
+      address: "0x457cdbE2a4018e4482352d70C7CF5fE42C88B326"
       abi: ChirpCity
-      startBlock: 23905152
+      startBlock: 23894082
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5

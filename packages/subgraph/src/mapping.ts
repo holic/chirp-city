@@ -1,11 +1,12 @@
-import { Bytes } from "@graphprotocol/graph-ts";
+import { Bytes, dataSource } from "@graphprotocol/graph-ts";
 import { Match, RegExp } from "assemblyscript-regex";
 
 import { PublicMessage } from "../generated/ChirpCity/ChirpCity";
 import { Message } from "../generated/schema";
-import { getChainId } from "./chainIds";
 
-const chainId = getChainId();
+const network = dataSource.network();
+const chainId =
+  network === "matic" ? "137" : network === "mumbai" ? "80001" : "137";
 
 export function handlePublicMessage(event: PublicMessage): void {
   const id = `chirp:${chainId}:${event.block.number}:${event.logIndex}`;

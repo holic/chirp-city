@@ -2,7 +2,7 @@
   "private": true,
   "name": "@chirp-city/app",
   "scripts": {
-    "postinstall": "remix setup node && cp -R node_modules/@chirp-city/contracts/typechain-types app/codegen/typechain",
+    "postinstall": "remix setup node",
     "css": "tailwindcss -o ./app/tailwind.css",
     "build": "npm run css -- --minify && remix build",
     "dev": "concurrently -n css,remix,gql \"npm run css -- --watch\" \"remix dev\" \"graphql-codegen --watch\"",

@@ -7,3 +7,8 @@ node_modules
 public/build
 api/_build
 app/tailwind.css
+
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

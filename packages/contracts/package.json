@@ -2,6 +2,7 @@
   "name": "@chirp-city/contracts",
   "private": true,
   "scripts": {
+    "postinstall": "npm run build",
     "start": "hardhat node",
     "test": "hardhat test",
     "build": "hardhat compile",

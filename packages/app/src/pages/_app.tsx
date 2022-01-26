@@ -7,7 +7,10 @@ import {
 } from "urql";
 
 export const graphClient = createGraphClient({
-  url: "https://api.thegraph.com/subgraphs/name/holic/chirp-city",
+  url:
+    process.env.NODE_ENV === "production"
+      ? "https://api.thegraph.com/subgraphs/name/holic/chirp-city"
+      : "https://api.thegraph.com/subgraphs/name/holic/chirp-city-testnet",
 });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {

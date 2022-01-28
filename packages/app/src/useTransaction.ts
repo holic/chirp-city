@@ -52,14 +52,6 @@ export const useTransaction = (
         debug("got connect state", connectState);
         currentProvider = connectState.provider;
       } catch (walletError: any) {
-        // ugh, web3modal doesn't emit an error properly when you cancel
-        // a connect wallet request
-        // https://github.com/Web3Modal/web3modal/pull/300
-        if (typeof walletError === "undefined") {
-          debug("probably cancelled in metamask, returning generic error");
-          // eslint-disable-next-line no-ex-assign
-          walletError = new Error("Could not connect to wallet");
-        }
         useStore.setState({ walletState: WalletState.idle, walletError });
         return false;
       }
@@ -122,21 +114,3 @@ export const useTransaction = (
 
   return { sendTransaction, walletState, walletError };
 };
-
-// if (currentProvider.network.chainId !== chainId) {
-//   debug("wrong network, asking wallet to switch");
-//   try {
-//     useStore.setState({ walletState: WalletState.switchingNetwork });
-//     await currentProvider.send("wallet_switchEthereumChain", [
-//       { chainId: chain.chainId },
-//     ]);
-//   } catch (error: any) {
-//     if (error.code === 4902) {
-//       useStore.setState({ walletState: WalletState.addingNetwork });
-//       await currentProvider.send("wallet_addEthereumChain", [chain]);
-//     } else {
-//       useStore.setState({ walletState: WalletState.idle, walletError });
-//       return;
-//     }
-//   }
-// }

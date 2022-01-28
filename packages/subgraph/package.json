@@ -10,10 +10,5 @@
     "@graphprotocol/graph-cli": "0.25.1",
     "@graphprotocol/graph-ts": "0.24.1",
     "assemblyscript-regex": "^1.6.4"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.7.0",
-    "@typescript-eslint/parser": "^5.7.0",
-    "typescript": "^4.5.4"
   }
 }

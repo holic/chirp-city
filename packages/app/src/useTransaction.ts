@@ -57,6 +57,7 @@ export const useTransaction = (
         // https://github.com/Web3Modal/web3modal/pull/300
         if (typeof walletError === "undefined") {
           debug("probably cancelled in metamask, returning generic error");
+          // eslint-disable-next-line no-ex-assign
           walletError = new Error("Could not connect to wallet");
         }
         useStore.setState({ walletState: WalletState.idle, walletError });

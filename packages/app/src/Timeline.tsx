@@ -79,7 +79,7 @@ export const Timeline = () => {
               Chirp
             </Button>
             {walletError ? (
-              <div className="px-2 py-1 text-sm text-red-500 border border-2 border-red-200 border-dashed bor">
+              <div className="px-2 py-1 text-sm text-red-500 border-2 border-red-200 border-dashed bor">
                 <strong>Error:</strong> {walletError.message}
               </div>
             ) : null}

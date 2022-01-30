@@ -1,9 +1,11 @@
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
 
+import { config } from "./config";
+
 export const ethereumProvider = new StaticJsonRpcProvider(
-  process.env.NEXT_PUBLIC_ETHEREUM_RPC_ENDPOINT
+  config.ETHEREUM_RPC_URL
 );
 
 export const polygonProvider = new StaticJsonRpcProvider(
-  process.env.NEXT_PUBLIC_POLYGON_RPC_ENDPOINT
+  config.POLYGON_RPC_URL
 );

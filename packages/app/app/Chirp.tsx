@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import Link from "next/link";
+import { Link } from "remix";
 import { gql } from "urql";
 
 import { AccountAvatar } from "./AccountAvatar";
@@ -38,16 +38,15 @@ export const Chirp = ({ message, fullLink }: Props) => {
             <AccountName address={message.from} />
           </div>
           <div>·</div>
-          <Link href={`/${name || address}/${message.id}`}>
-            <a
-              className={classNames(
-                fullLink ? "before:absolute before:inset-0" : null
-              )}
-            >
-              <span className="relative hover:underline">
-                <RelativeTime timestamp={message.timestamp} />
-              </span>
-            </a>
+          <Link
+            to={`/${name || address}/${message.id}`}
+            className={classNames(
+              fullLink ? "before:absolute before:inset-0" : null
+            )}
+          >
+            <span className="relative hover:underline">
+              <RelativeTime timestamp={message.timestamp} />
+            </span>
           </Link>
         </div>
         <div

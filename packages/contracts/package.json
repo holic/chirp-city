@@ -5,7 +5,7 @@
     "postinstall": "npm run build",
     "start": "hardhat node",
     "test": "hardhat test",
-    "build": "hardhat compile && tsc --build",
+    "build": "NODE_ENV=production hardhat compile && tsc --build",
     "clean": "hardhat clean",
     "deploy:local": "hardhat clean && hardhat run scripts/deploy.ts --network localhost",
     "deploy:mumbai": "hardhat clean && hardhat run scripts/deploy.ts --network mumbai",

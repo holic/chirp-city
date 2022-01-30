@@ -1,6 +1,10 @@
 {
   "private": true,
   "name": "@chirp-city/app",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
     "postinstall": "remix setup node",
     "css": "tailwindcss -o ./app/tailwind.css",

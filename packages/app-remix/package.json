@@ -5,7 +5,7 @@
     "postinstall": "remix setup node",
     "css": "tailwindcss -o ./app/tailwind.css",
     "build": "npm run css -- --minify && remix build",
-    "dev": "concurrently -n css,remix,gql \"npm run css -- --watch\" \"remix dev\" \"graphql-codegen --watch\"",
+    "dev": "npm run css -- --watch & remix dev & graphql-codegen --watch",
     "start": "remix-serve api/_build"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "@vercel/node": "^1.12.1",
     "classnames": "^2.3.1",
     "debug": "^4.3.3",
+    "dotenv": "^10.0.0",
     "graphql": "^16.2.0",
     "lodash": "^4.17.21",
     "luxon": "^2.2.0",

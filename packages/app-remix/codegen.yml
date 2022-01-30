@@ -1,7 +1,7 @@
 schema: https://api.thegraph.com/subgraphs/name/holic/chirp-city
-documents: 'src/**/*.{ts,tsx,graphql}'
+documents: 'app/**/*.{ts,tsx,graphql}'
 generates:
-  ./src/codegen/subgraph.ts:
+  ./app/codegen/subgraph.ts:
     plugins:
       - '@graphql-codegen/typescript'
       - '@graphql-codegen/typescript-operations'

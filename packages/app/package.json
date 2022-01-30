@@ -1,27 +1,35 @@
 {
-  "name": "@chirp-city/app",
   "private": true,
+  "name": "@chirp-city/app",
   "scripts": {
-    "dev": "next dev & graphql-codegen --watch",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "codegen": "graphql-codegen"
+    "postinstall": "remix setup node",
+    "css": "tailwindcss -o ./app/tailwind.css",
+    "build": "npm run css -- --minify && remix build",
+    "dev": "npm run css -- --watch & remix dev & graphql-codegen --watch",
+    "start": "remix-serve api/_build"
   },
   "dependencies": {
     "@chirp-city/contracts": "workspace:*",
     "@ethersproject/address": "^5.5.0",
     "@ethersproject/contracts": "^5.5.0",
     "@ethersproject/providers": "^5.5.0",
+    "@remix-run/react": "^1.1.3",
+    "@remix-run/serve": "^1.1.3",
+    "@remix-run/vercel": "^1.1.3",
+    "@vercel/node": "^1.12.1",
     "classnames": "^2.3.1",
     "debug": "^4.3.3",
+    "dotenv": "^10.0.0",
     "graphql": "^16.2.0",
+    "lodash": "^4.17.21",
     "luxon": "^2.2.0",
-    "next": "12.0.9",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-is": "^17.0.2",
+    "remix": "^1.1.3",
+    "tiny-invariant": "^1.2.0",
     "urql": "^2.0.6",
-    "web3modal": "^1.9.5",
+    "web3modal": "^1.9.4",
     "zustand": "^3.6.7"
   },
   "devDependencies": {
@@ -29,15 +37,17 @@
     "@graphql-codegen/typescript": "^2.4.2",
     "@graphql-codegen/typescript-operations": "^2.2.2",
     "@graphql-codegen/typescript-urql": "^3.4.2",
+    "@remix-run/dev": "^1.1.3",
     "@types/debug": "^4.1.7",
     "@types/luxon": "^2.0.8",
     "@types/node": "17.0.0",
-    "@types/react": "17.0.37",
+    "@types/react": "^17.0.24",
+    "@types/react-dom": "^17.0.9",
     "autoprefixer": "^10.4.0",
-    "eslint": "8.4.1",
-    "eslint-config-next": "12.0.7",
+    "concurrently": "^7.0.0",
+    "graphql-tag": "^2.12.6",
     "postcss": "^8.4.5",
     "tailwindcss": "^3.0.5",
-    "typescript": "4.5.5"
+    "typescript": "^4.5.5"
   }
 }

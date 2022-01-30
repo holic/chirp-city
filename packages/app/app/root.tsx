@@ -12,11 +12,14 @@ import {
   Provider as GraphProvider,
 } from "urql";
 
-import { Config, config, configLoader } from "./config";
+import { Config, configLoader } from "./config";
 import styles from "./tailwind.css";
 
 export const graphClient = createGraphClient({
-  url: config.SUBGRAPH_URL,
+  url:
+    process.env.NODE_ENV === "production"
+      ? "https://api.thegraph.com/subgraphs/name/holic/chirp-city"
+      : "https://api.thegraph.com/subgraphs/name/holic/chirp-city-testnet",
 });
 
 export const meta: MetaFunction = () => {

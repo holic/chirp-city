@@ -14,12 +14,8 @@ const requireEnv = (key: string) => {
 };
 
 const getConfig = () => ({
-  ETHEREUM_RPC_ENDPOINT: requireEnv("ETHEREUM_RPC_ENDPOINT"),
-  POLYGON_RPC_ENDPOINT: requireEnv("POLYGON_RPC_ENDPOINT"),
-  SUBGRAPH_URL:
-    process.env.NODE_ENV === "production"
-      ? "https://api.thegraph.com/subgraphs/name/holic/chirp-city"
-      : "https://api.thegraph.com/subgraphs/name/holic/chirp-city-testnet",
+  ETHEREUM_RPC_URL: requireEnv("ETHEREUM_RPC_URL"),
+  POLYGON_RPC_URL: requireEnv("POLYGON_RPC_URL"),
 });
 
 declare global {

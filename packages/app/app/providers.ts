@@ -1,9 +1,11 @@
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
 
+import { config } from "./config";
+
 export const ethereumProvider = new StaticJsonRpcProvider(
-  "https://eth-mainnet.alchemyapi.io/v2/5v4BuuWBFvvYHZoZZP5xFo2q1ldvABwj"
+  config.ETHEREUM_RPC_URL
 );
 
 export const polygonProvider = new StaticJsonRpcProvider(
-  "https://polygon-mumbai.g.alchemy.com/v2/DIxSbUNBlKWzrk_5mp1GDMgwoLLeTSpv"
+  config.POLYGON_RPC_URL
 );

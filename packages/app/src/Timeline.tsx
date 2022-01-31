@@ -7,6 +7,7 @@ import { Button } from "./Button";
 import { Chirp, ChirpMessageFragment } from "./Chirp";
 import { useTimelineQuery } from "./codegen/subgraph";
 import { chirpCityContract } from "./contracts";
+import { Editor } from "./Editor";
 import { PendingIcon } from "./icons/PendingIcon";
 import { useTransaction, WalletState } from "./useTransaction";
 import { useWallet } from "./useWallet";
@@ -59,7 +60,7 @@ export const Timeline = () => {
         <div className="flex flex-col gap-4 py-4">
           <div className="px-4 flex gap-4">
             {account ? <AccountAvatar address={account} /> : <Avatar />}
-            <div className="flex flex-col flex-wrap w-full">
+            {/* <div className="flex flex-col flex-wrap w-full">
               <div className="flex text-xl py-2">
                 <textarea
                   className="w-full h-16 outline-none resize-none disabled:opacity-60"
@@ -72,6 +73,9 @@ export const Timeline = () => {
                   disabled={pending}
                 />
               </div>
+            </div> */}
+            <div className="flex flex-auto text-xl py-2">
+              <Editor />
             </div>
           </div>
           <div className="px-4 flex gap-4 justify-between items-center flex-row-reverse">

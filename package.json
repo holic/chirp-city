@@ -1,7 +1,9 @@
 {
   "name": "chirp-city",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "postinstall": "pnpm run build --filter=\"*/contracts\""
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",

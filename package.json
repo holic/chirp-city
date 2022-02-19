@@ -1,7 +1,6 @@
 {
   "name": "chirp-city",
   "private": true,
-  "scripts": {},
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",

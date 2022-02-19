@@ -2,7 +2,7 @@
   "name": "@chirp-city/contracts",
   "private": true,
   "scripts": {
-    "prepare": "npm run build",
+    "prepare": "pnpm run build",
     "start": "hardhat node",
     "test": "hardhat test",
     "build": "hardhat compile && tsc --build",
